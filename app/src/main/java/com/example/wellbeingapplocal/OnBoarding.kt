@@ -31,25 +31,6 @@ class OnBoarding : FragmentActivity() {
         }
     }
 
-
-    private fun setupViewPager2() {
-        val list: MutableList<String> = ArrayList()
-        list.add("Page1")
-        list.add("Page2")
-        list.add("Page3")
-        list.add("Page4")
-
-        val colorList: MutableList<String> = ArrayList()
-        colorList.add("#f0f0f0")
-//        colorList.add("#f0f0f0")
-//        colorList.add("#f0f0f0")
-//        colorList.add("#f0f0f0")
-
-        // Set adapter to viewPager.
-        //binding.viewPager.adapter = OnBoardingAdapter(this, list, colorList)
-
-    }
-
     private fun setupViewPagerA() {
         //val viewPager2 = binding.viewPager
         binding.viewPager.adapter = ViewPagerAdapter(this)

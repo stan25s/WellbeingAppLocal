@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:contentDescription="@string/app_name"
-        android:src="@drawable/tw_logo"
+        android:src="@drawable/ic_dashboard_black_24dp"
         app:layout_constraintBottom_toTopOf="@+id/label"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
