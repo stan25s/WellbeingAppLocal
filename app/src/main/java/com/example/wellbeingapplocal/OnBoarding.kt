@@ -3,10 +3,11 @@ package com.example.wellbeingapplocal
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Adapter
+import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.example.wellbeingapplocal.databinding.ActivityOnboardingBinding
 
-class OnBoarding : AppCompatActivity() {
+class OnBoarding : FragmentActivity() {
 
     private lateinit var binding: ActivityOnboardingBinding
 
@@ -15,7 +16,7 @@ class OnBoarding : AppCompatActivity() {
         binding = ActivityOnboardingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setupViewPager2()
+        setupViewPagerA()
     }
 
     override fun onBackPressed() {
@@ -33,19 +34,25 @@ class OnBoarding : AppCompatActivity() {
 
     private fun setupViewPager2() {
         val list: MutableList<String> = ArrayList()
-        list.add("This is your First Screen")
-        list.add("This is your Second Screen")
-        list.add("This is your Third Screen")
-        list.add("This is your Fourth Screen")
+        list.add("Page1")
+        list.add("Page2")
+        list.add("Page3")
+        list.add("Page4")
 
         val colorList: MutableList<String> = ArrayList()
         colorList.add("#f0f0f0")
-        colorList.add("#f0f0f0")
-        colorList.add("#f0f0f0")
-        colorList.add("#f0f0f0")
+//        colorList.add("#f0f0f0")
+//        colorList.add("#f0f0f0")
+//        colorList.add("#f0f0f0")
 
         // Set adapter to viewPager.
-        binding.viewPager.adapter = OnBoardingAdapter(this, list, colorList)
+        //binding.viewPager.adapter = OnBoardingAdapter(this, list, colorList)
 
     }
+
+    private fun setupViewPagerA() {
+        //val viewPager2 = binding.viewPager
+        binding.viewPager.adapter = ViewPagerAdapter(this)
+    }
+
 }
