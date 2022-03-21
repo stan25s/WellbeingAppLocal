@@ -10,9 +10,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginBottom="100dp">
 
         <ImageView
             android:id="@+id/imgMain"
@@ -20,29 +21,30 @@
             android:layout_height="100dp"
             android:layout_marginBottom="20dp"
             android:contentDescription="@string/no_image"
-            android:scaleType="fitXY"
             android:foreground="@drawable/circle_back"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/editImg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/edit_image_icon"
-            app:layout_constraintEnd_toEndOf="@id/imgMain"
+            android:contentDescription="Edit Text"
             app:layout_constraintBottom_toBottomOf="@id/imgMain"
-            android:contentDescription="Edit Text" />
+            app:layout_constraintEnd_toEndOf="@id/imgMain" />
 
         <TextView
             android:id="@+id/txtMain"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:textColor="@color/border1"
             android:textSize="13sp"
-            android:layout_marginTop="10dp"
+            android:maxHeight="60dp"
             app:layout_constraintStart_toStartOf="@id/editTextName"
             app:layout_constraintTop_toBottomOf="@+id/imgMain" />
 
@@ -52,17 +54,32 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:autofillHints="false"
-            android:textSize="17sp"
             android:background="@drawable/back"
             android:ems="10"
             android:hint="Name"
             android:inputType="textPersonName"
             android:minHeight="48dp"
-            android:textColorHint="#757575"
             android:padding="12dp"
+            android:textColorHint="#757575"
+            android:textSize="17sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/txtMain" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/button_background"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="Let's GO!"
+            android:textColor="@color/bg1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextName" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

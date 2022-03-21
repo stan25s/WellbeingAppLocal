@@ -38,13 +38,6 @@ class Onboarding3Fragment : Fragment() {
     private fun setupData() {
         binding.txtMain.text = getString(R.string.third_fragment)
         binding.imgMain.setImageResource(R.mipmap.avatar01_round)
-//        binding.imgMain.setOnClickListener(View.OnClickListener {
-//            var p : PopupWindow = PopupWindow(it, 150, 100)
-//            p.showAtLocation(binding.root.rootView, 0, 50,50)
-//        })
-        //binding.imgMain.set
-        //binding.imgMain.setImageDrawable(Drawable.createFromPath("C:\\Users\\stans\\AndroidStudioProjects\\WellbeingAppLocal\\app\\src\\main\\res\\drawable-v24\\avatar_01.png"))
-        //binding.editTextTextPersonName.setShadowLayer(1.0F, 5.0F, 5.0F, 4210752)
     }
 
 
