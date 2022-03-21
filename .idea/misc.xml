@@ -3,11 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/stans/AndroidStudioProjects/WellbeingAppLocal/app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.314" />
-        <entry key="..\:/Users/stans/AndroidStudioProjects/WellbeingAppLocal/app/src/main/res/layout/activity_main.xml" value="0.55" />
-        <entry key="..\:/Users/stans/AndroidStudioProjects/WellbeingAppLocal/app/src/main/res/layout/activity_onboarding.xml" value="0.3109375" />
-        <entry key="..\:/Users/stans/AndroidStudioProjects/WellbeingAppLocal/app/src/main/res/layout/fragment_home.xml" value="0.3109375" />
-        <entry key="..\:/Users/stans/AndroidStudioProjects/WellbeingAppLocal/app/src/main/res/menu/bottom_nav_menu.xml" value="0.3109375" />
+        <entry key="..\:/Users/stans/Documents/WellbeingAppLocal/app/src/main/res/layout/activity_main.xml" value="0.18432971014492755" />
+        <entry key="..\:/Users/stans/Documents/WellbeingAppLocal/app/src/main/res/layout/activity_onboarding.xml" value="0.25" />
+        <entry key="..\:/Users/stans/Documents/WellbeingAppLocal/app/src/main/res/layout/onboarding_1.xml" value="0.1" />
       </map>
     </option>
   </component>
