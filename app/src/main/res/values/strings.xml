@@ -4,8 +4,8 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_profile">Profile</string>
     <string name="no_image">No Image</string>
-    <string name="first_fragment">First Fragment</string>
-    <string name="second_fragment">Second Fragment</string>
+    <string name="first_fragment">Here\'s the first onboarding page! Welcome to the app!</string>
+    <string name="second_fragment">Let\'s get to know each other! Pick some items from this list that you\'d like to work on together. (optional)</string>
     <string name="third_fragment">First name / preferred name</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

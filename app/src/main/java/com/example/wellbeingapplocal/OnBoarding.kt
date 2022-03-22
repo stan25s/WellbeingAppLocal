@@ -11,6 +11,8 @@ class OnBoarding : FragmentActivity() {
 
     private lateinit var binding: ActivityOnboardingBinding
 
+    var selectedFocus : ArrayList<String> = ArrayList()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityOnboardingBinding.inflate(layoutInflater)
@@ -33,7 +35,9 @@ class OnBoarding : FragmentActivity() {
 
     private fun setupViewPagerA() {
         //val viewPager2 = binding.viewPager
+        binding.viewPager.id
         binding.viewPager.adapter = ViewPagerAdapter(this)
+        //binding.viewPager.isUserInputEnabled = false
     }
 
 }
