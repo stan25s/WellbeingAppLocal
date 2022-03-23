@@ -26,7 +26,9 @@ class Onboarding3Fragment : Fragment() {
 
     private val sharedPrefFile = "sharedprefs"
 
-    private var chosenAvatar: Int = 0;
+    private val charPool : List<Char> = ('a'..'z') + ('A'..'Z') + ('0'..'9')
+
+    private var chosenAvatar: String = "";
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -58,12 +60,20 @@ class Onboarding3Fragment : Fragment() {
                 intent.putExtra("prefName", prefName)
                 intent.putExtra("avatar", chosenAvatar)
 
+                //Create new userID
+                val randomString = (1..8)
+                    .map { i -> kotlin.random.Random.nextInt(0, charPool.size) }
+                    .map(charPool::get)
+                    .joinToString("")
+
                 //Save to shared preferences
-                val sharedPreferences: SharedPreferences = it.context.getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
+                val sharedPreferences: SharedPreferences = it.context
+                    .getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
                 val editor:SharedPreferences.Editor = sharedPreferences.edit()
                 editor.putString("prefName", prefName)
-                editor.putInt("avatar", chosenAvatar)
+                editor.putString("avatar", chosenAvatar)
                 editor.putStringSet("focuses", (activity as OnBoarding).selectedFocus.toSet())
+                editor.putString("userID", randomString)
                 editor.apply()
 
                 startActivity(intent)

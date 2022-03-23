@@ -10,18 +10,23 @@
         <entry key="..\:/Users/stans/AndroidStudioProjects/WellbeingAppLocal/app/src/main/res/drawable/button_toggle_text_color.xml" value="0.3035" />
         <entry key="..\:/Users/stans/AndroidStudioProjects/WellbeingAppLocal/app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.314" />
         <entry key="..\:/Users/stans/AndroidStudioProjects/WellbeingAppLocal/app/src/main/res/drawable/ic_home_black_24dp.xml" value="0.3475" />
+        <entry key="..\:/Users/stans/AndroidStudioProjects/WellbeingAppLocal/app/src/main/res/drawable/my_message_bubble.xml" value="0.349" />
         <entry key="..\:/Users/stans/AndroidStudioProjects/WellbeingAppLocal/app/src/main/res/drawable/nav_dot_large.xml" value="0.314" />
         <entry key="..\:/Users/stans/AndroidStudioProjects/WellbeingAppLocal/app/src/main/res/drawable/nav_dot_small.xml" value="0.314" />
+        <entry key="..\:/Users/stans/AndroidStudioProjects/WellbeingAppLocal/app/src/main/res/drawable/other_message_bubble.xml" value="0.349" />
         <entry key="..\:/Users/stans/AndroidStudioProjects/WellbeingAppLocal/app/src/main/res/drawable/toggle_buttonoff.xml" value="0.314" />
         <entry key="..\:/Users/stans/AndroidStudioProjects/WellbeingAppLocal/app/src/main/res/drawable/toggle_buttonon.xml" value="0.3035" />
         <entry key="..\:/Users/stans/AndroidStudioProjects/WellbeingAppLocal/app/src/main/res/layout/activity_main.xml" value="0.55" />
         <entry key="..\:/Users/stans/AndroidStudioProjects/WellbeingAppLocal/app/src/main/res/layout/activity_onboarding.xml" value="0.3109375" />
+        <entry key="..\:/Users/stans/AndroidStudioProjects/WellbeingAppLocal/app/src/main/res/layout/bot_message.xml" value="0.55" />
         <entry key="..\:/Users/stans/AndroidStudioProjects/WellbeingAppLocal/app/src/main/res/layout/edit_image_icon.xml" value="0.55" />
         <entry key="..\:/Users/stans/AndroidStudioProjects/WellbeingAppLocal/app/src/main/res/layout/fragment_home.xml" value="0.3109375" />
         <entry key="..\:/Users/stans/AndroidStudioProjects/WellbeingAppLocal/app/src/main/res/layout/fragment_onboarding1.xml" value="0.3109375" />
         <entry key="..\:/Users/stans/AndroidStudioProjects/WellbeingAppLocal/app/src/main/res/layout/fragment_onboarding2.xml" value="0.4125" />
         <entry key="..\:/Users/stans/AndroidStudioProjects/WellbeingAppLocal/app/src/main/res/layout/fragment_onboarding3.xml" value="0.22" />
+        <entry key="..\:/Users/stans/AndroidStudioProjects/WellbeingAppLocal/app/src/main/res/layout/my_message.xml" value="0.55" />
         <entry key="..\:/Users/stans/AndroidStudioProjects/WellbeingAppLocal/app/src/main/res/layout/onboardingtest_layout.xml" value="0.3109375" />
+        <entry key="..\:/Users/stans/AndroidStudioProjects/WellbeingAppLocal/app/src/main/res/layout/other_message.xml" value="0.55" />
         <entry key="..\:/Users/stans/AndroidStudioProjects/WellbeingAppLocal/app/src/main/res/menu/bottom_nav_menu.xml" value="0.3109375" />
         <entry key="..\:/Users/stans/AndroidStudioProjects/WellbeingAppLocal/app/src/main/res/mipmap-anydpi-v26/avatar01.xml" value="0.3475" />
       </map>

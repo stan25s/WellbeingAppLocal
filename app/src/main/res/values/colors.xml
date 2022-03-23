@@ -2,7 +2,7 @@
 <resources>
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
+    <color name="purple_700">#5960EC</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
@@ -13,5 +13,8 @@
     <color name="border1">#707070</color>
     <color name="border2">#2E2E2E</color>
     <color name="accent">#5960EC</color>
+    <color name="accent_dark">#373DB3</color>
     <color name="accent_muted">#CDCEEC</color>
+    <color name="secondary">#F85EAE</color>
+    <color name="secondary_dark">#971257</color>
 </resources>

@@ -38,7 +38,7 @@ class Onboarding2Fragment : Fragment() {
 
     private fun setupData() {
         binding.txtMain.text = getString(R.string.second_fragment)
-        binding.imgMain.setImageResource(R.mipmap.ic_launcher)
+        binding.imgMain.setImageResource(R.drawable.robot_phone)
 
         binding.toggleButton1.setOnClickListener {
             var textVal = binding.toggleButton1.textOff.toString()
