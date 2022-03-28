@@ -1,22 +1,33 @@
 package com.example.wellbeingapplocal.ui.home
 
-import android.content.Context
-import android.content.SharedPreferences
+import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.applozic.mobicomkit.api.account.register.RegistrationResponse
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.wellbeingapplocal.Message
+import com.example.wellbeingapplocal.MessageAdapter
+import com.example.wellbeingapplocal.R
 import com.example.wellbeingapplocal.databinding.FragmentHomeBinding
-import io.kommunicate.KmConversationBuilder
-import io.kommunicate.Kommunicate
-import io.kommunicate.callbacks.KMLoginHandler
-import io.kommunicate.callbacks.KmCallback
-import io.kommunicate.users.KMUser
+import com.pusher.pusherchat.ChatService
+import kotlinx.android.synthetic.main.fragment_home.*
+import java.util.*
+import android.widget.Toast
+import androidx.core.content.ContextCompat.getSystemService
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import com.example.wellbeingapplocal.ChatApp
+import kotlinx.android.synthetic.main.fragment_home.*
+import com.pusher.client.Pusher
+import com.pusher.client.PusherOptions
+import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class HomeFragment : Fragment() {
@@ -29,6 +40,11 @@ class HomeFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
+    private lateinit var adapter: MessageAdapter
+
+    private val pusherAppKey = "PUSHER_APP_KEY"
+    private val pusherAppCluster = "PUSHER_APP_CLUSTER"
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -40,53 +56,138 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textHome
-        homeViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
+//        val textView: TextView = binding.textHome
+//        homeViewModel.text.observe(viewLifecycleOwner) {
+//            textView.text = it
+//        }
+
         return root
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        messageList.layoutManager = LinearLayoutManager(context)
+        //messageList.layoutManager = LinearLayoutManager(requireContext())
+        adapter = context?.let { MessageAdapter(it) }!!
+        messageList.adapter = adapter
 
-//        Kommunicate.init(context, "38eac480f499b449606408459aa35b6d0")
+        //Only use this for testing!! Then delete
+        ChatApp.user = "testUser"
+
+        btnSend.setOnClickListener {
+            if(txtMessage.text.isNotEmpty()) {
+                val message = Message(
+                    ChatApp.user,
+                    txtMessage.text.toString(),
+                    Calendar.getInstance().timeInMillis
+                )
+
+                val call = ChatService.create().postMessage(message)
+
+                call.enqueue(object : Callback<Void> {
+                    override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                        resetInput()
+                        if (!response.isSuccessful) {
+                            Log.e(TAG, response.code().toString());
+                            Toast.makeText(context,"Response was not successful", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+                    override fun onFailure(call: Call<Void>, t: Throwable) {
+                        resetInput()
+                        Log.e(TAG, t.toString());
+                        Toast.makeText(context,"Error when calling the service", Toast.LENGTH_SHORT).show()
+                    }
+                })
+            } else {
+                Toast.makeText(context,"Message should not be empty", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        setupPusher()
+    }
+
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//        //setContentView(R.layout.fragment_home)
 //
-//        val sharedPreferences: SharedPreferences? =
-//            context?.getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
-//        val userID = sharedPreferences?.getString("userID", "defaultUser")
-//        val userImageLink = sharedPreferences?.getString("avatarURL", "https://i.imgur.com/kEJul3R.png")
-//        val prefName = sharedPreferences?.getString("prefName", "You")
+////        if(binding == null) {
+////
+////        }
 //
-//        var user = KMUser()
-//        user.userId = userID
-//        user.password = "password"
-//        user.imageLink = userImageLink
-//        user.displayName = prefName
+////        messageList.layoutManager = LinearLayoutManager(context)
+////        //messageList.layoutManager = LinearLayoutManager(requireContext())
+////        adapter = context?.let { MessageAdapter(it) }!!
+////        messageList.adapter = adapter
 //
-//        Kommunicate.login(context, user, object : KMLoginHandler {
-//            override fun onSuccess(registrationResponse: RegistrationResponse, context: Context) {
-//                KmConversationBuilder(context)
-//                    .setKmUser(user)
-//                    .launchConversation(object : KmCallback {
-//                        override fun onSuccess(message: Any) {
-//                            Log.d("Conversation", "Success : $message")
+//        btnSend.setOnClickListener {
+//            if(txtMessage.text.isNotEmpty()) {
+//                val message = Message(
+//                    ChatApp.user,
+//                    txtMessage.text.toString(),
+//                    Calendar.getInstance().timeInMillis
+//                )
+//
+//                val call = ChatService.create().postMessage(message)
+//
+//                call.enqueue(object : Callback<Void> {
+//                    override fun onResponse(call: Call<Void>, response: Response<Void>) {
+//                        resetInput()
+//                        if (!response.isSuccessful) {
+//                            Log.e(TAG, response.code().toString());
+//                            Toast.makeText(context,"Response was not successful", Toast.LENGTH_SHORT).show()
 //                        }
+//                    }
 //
-//                        override fun onFailure(error: Any) {
-//                            Log.d("Conversation", "Failure : $error")
-//                        }
-//                    })
-//                // You can perform operations such as opening the conversation, creating a new conversation or update user details on success
+//                    override fun onFailure(call: Call<Void>, t: Throwable) {
+//                        resetInput()
+//                        Log.e(TAG, t.toString());
+//                        Toast.makeText(context,"Error when calling the service", Toast.LENGTH_SHORT).show()
+//                    }
+//                })
+//            } else {
+//                Toast.makeText(context,"Message should not be empty", Toast.LENGTH_SHORT).show()
 //            }
+//        }
 //
-//            override fun onFailure(
-//                registrationResponse: RegistrationResponse,
-//                exception: Exception
-//            ) {
-//                // You can perform actions such as repeating the login call or throw an error message on failure
-//            }
-//        })
+//        setupPusher()
+//    }
+
+    private fun resetInput() {
+        // Clean text box
+        txtMessage.text.clear()
+
+        // Hide keyboard
+
+        fun Fragment.hideKeyboard() = view?.let { ViewCompat.getWindowInsetsController(it)?.hide(WindowInsetsCompat.Type.ime()) }
+        hideKeyboard()
+    }
+
+    private fun setupPusher() {
+        val options = PusherOptions()
+        options.setCluster(pusherAppCluster)
+
+        val pusher = Pusher(pusherAppKey, options)
+        val channel = pusher.subscribe("chat")
+
+        channel.bind("new_message") { data ->
+            //val jsonObject = data.
+
+            val message = Message(
+                data.getProperty("user").toString(),
+                data.getProperty("message").toString(),
+                data.getProperty("time") as Long
+            )
+
+            activity?.runOnUiThread {
+                adapter.addMessage(message)
+                // scroll the RecyclerView to the last added element
+                messageList.scrollToPosition(adapter.itemCount - 1);
+            }
+
+        }
+
+        pusher.connect()
     }
 
     override fun onDestroyView() {
