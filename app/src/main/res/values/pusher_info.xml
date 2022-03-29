@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_id">1366121</string>
-    <string name="key">cf570489608249a8f70f</string>
-    <string name="secret">25e77dbdd53ffbf5ae18</string>
-    <string name="cluster">eu</string>
+    <string name="pusher_app_id">1366121</string>
+    <string name="pusher_key">cf570489608249a8f70f</string>
+    <string name="pusher_secret">25e77dbdd53ffbf5ae18</string>
+    <string name="pusher_cluster">eu</string>
 </resources>
 <!--    app_id = "1366121"-->
 <!--    key = "cf570489608249a8f70f"-->

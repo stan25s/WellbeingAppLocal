@@ -8,10 +8,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.wellbeingapplocal.databinding.ActivityMainBinding
-//import kotlinx.android.synthetic.main.activity_main.*
 
-//https://www.raywenderlich.com/8192680-viewpager2-in-android-getting-started
-//Link to ViewPagerTutorial
 
 
 class MainActivity : AppCompatActivity() {

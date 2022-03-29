@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.other_message.view.*
 
 private const val VIEW_TYPE_MY_MESSAGE = 1
 private const val VIEW_TYPE_OTHER_MESSAGE = 2
-private const val VIEW_TYPE_BOT_MESSAGE = 3  // line to add
+private const val VIEW_TYPE_BOT_MESSAGE = 3
 
 class MessageAdapter (val context: Context) : RecyclerView.Adapter<MessageViewHolder>() {
     private val messages: ArrayList<Message> = ArrayList()

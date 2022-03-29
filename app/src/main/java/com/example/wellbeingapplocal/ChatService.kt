@@ -1,6 +1,5 @@
-package com.pusher.pusherchat
+package com.example.wellbeingapplocal
 
-import com.example.wellbeingapplocal.Message
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -12,7 +11,7 @@ interface ChatService {
     fun postMessage(@Body body: Message): Call<Void>
 
     companion object {
-        private const val BASE_URL = "http://10.0.2.2:8080/"
+        private const val BASE_URL = "http://192.168.1.76:8080/"
 
         fun create(): ChatService {
             val retrofit = Retrofit.Builder()
