@@ -37,7 +37,7 @@ class Onboarding1Fragment : Fragment() {
 
     private fun setupData() {
         binding.txtMain.text = getString(R.string.first_fragment)
-        binding.imgMain.setImageResource(R.drawable.robot_hello)
+        binding.imgMain.setImageResource(R.drawable.avatar_01)
 
     }
 }
