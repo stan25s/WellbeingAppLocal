@@ -3,13 +3,20 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/stans/AndroidStudioProjects/WellbeingAppLocal/app/src/main/res/drawable-anydpi/ic_home_black.xml" value="0.314" />
+        <entry key="..\:/Users/stans/AndroidStudioProjects/WellbeingAppLocal/app/src/main/res/drawable-anydpi/ic_send_button.xml" value="0.314" />
         <entry key="..\:/Users/stans/AndroidStudioProjects/WellbeingAppLocal/app/src/main/res/drawable-v24/button_background.xml" value="0.314" />
         <entry key="..\:/Users/stans/AndroidStudioProjects/WellbeingAppLocal/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.3475" />
+        <entry key="..\:/Users/stans/AndroidStudioProjects/WellbeingAppLocal/app/src/main/res/drawable-v24/send_button_bg.xml" value="0.3905" />
         <entry key="..\:/Users/stans/AndroidStudioProjects/WellbeingAppLocal/app/src/main/res/drawable/back.xml" value="0.3475" />
+        <entry key="..\:/Users/stans/AndroidStudioProjects/WellbeingAppLocal/app/src/main/res/drawable/bot_message_bubble.xml" value="0.3115" />
         <entry key="..\:/Users/stans/AndroidStudioProjects/WellbeingAppLocal/app/src/main/res/drawable/button_toggle.xml" value="0.3035" />
         <entry key="..\:/Users/stans/AndroidStudioProjects/WellbeingAppLocal/app/src/main/res/drawable/button_toggle_text_color.xml" value="0.3035" />
+        <entry key="..\:/Users/stans/AndroidStudioProjects/WellbeingAppLocal/app/src/main/res/drawable/circle_back.xml" value="0.3905" />
+        <entry key="..\:/Users/stans/AndroidStudioProjects/WellbeingAppLocal/app/src/main/res/drawable/edit_text_bg.xml" value="0.314" />
         <entry key="..\:/Users/stans/AndroidStudioProjects/WellbeingAppLocal/app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.314" />
         <entry key="..\:/Users/stans/AndroidStudioProjects/WellbeingAppLocal/app/src/main/res/drawable/ic_home_black_24dp.xml" value="0.3475" />
+        <entry key="..\:/Users/stans/AndroidStudioProjects/WellbeingAppLocal/app/src/main/res/drawable/ic_paper_plane_.xml" value="0.314" />
         <entry key="..\:/Users/stans/AndroidStudioProjects/WellbeingAppLocal/app/src/main/res/drawable/my_message_bubble.xml" value="0.349" />
         <entry key="..\:/Users/stans/AndroidStudioProjects/WellbeingAppLocal/app/src/main/res/drawable/nav_dot_large.xml" value="0.314" />
         <entry key="..\:/Users/stans/AndroidStudioProjects/WellbeingAppLocal/app/src/main/res/drawable/nav_dot_small.xml" value="0.314" />
@@ -20,7 +27,7 @@
         <entry key="..\:/Users/stans/AndroidStudioProjects/WellbeingAppLocal/app/src/main/res/layout/activity_onboarding.xml" value="0.3109375" />
         <entry key="..\:/Users/stans/AndroidStudioProjects/WellbeingAppLocal/app/src/main/res/layout/bot_message.xml" value="0.55" />
         <entry key="..\:/Users/stans/AndroidStudioProjects/WellbeingAppLocal/app/src/main/res/layout/edit_image_icon.xml" value="0.55" />
-        <entry key="..\:/Users/stans/AndroidStudioProjects/WellbeingAppLocal/app/src/main/res/layout/fragment_home.xml" value="0.3109375" />
+        <entry key="..\:/Users/stans/AndroidStudioProjects/WellbeingAppLocal/app/src/main/res/layout/fragment_home.xml" value="0.31814483319772174" />
         <entry key="..\:/Users/stans/AndroidStudioProjects/WellbeingAppLocal/app/src/main/res/layout/fragment_onboarding1.xml" value="0.3109375" />
         <entry key="..\:/Users/stans/AndroidStudioProjects/WellbeingAppLocal/app/src/main/res/layout/fragment_onboarding2.xml" value="0.4125" />
         <entry key="..\:/Users/stans/AndroidStudioProjects/WellbeingAppLocal/app/src/main/res/layout/fragment_onboarding3.xml" value="0.22" />

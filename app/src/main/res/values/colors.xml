@@ -9,12 +9,12 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="bg1">#f9f7f6</color>
-    <color name="bg2">#f3efec</color>
+    <color name="bg2">#E8E0DA</color>
     <color name="border1">#707070</color>
     <color name="border2">#2E2E2E</color>
     <color name="accent">#5960EC</color>
     <color name="accent_dark">#373DB3</color>
-    <color name="accent_muted">#CDCEEC</color>
+    <color name="accent_muted">#e5e6ff</color>
     <color name="secondary">#F85EAE</color>
     <color name="secondary_dark">#971257</color>
 </resources>

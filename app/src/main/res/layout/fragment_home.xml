@@ -10,13 +10,12 @@
         android:id="@+id/messageList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="107dp"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
+        android:layout_marginBottom="110dp"
         android:scrollbars="vertical"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/layout_messageArea">
     </androidx.recyclerview.widget.RecyclerView>
 
     <View
@@ -34,11 +33,10 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:minHeight="48dp"
-        android:background="@color/bg2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginBottom="55dp">
+        android:layout_marginBottom="58dp">
 
         <EditText
             android:id="@+id/txtMessage"
@@ -48,22 +46,33 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:hint="Enter message"
-            android:inputType="text"
+            android:background="@drawable/edit_text_bg"
+            android:hint="Type your message here"
+            android:inputType="textMultiLine"
             android:maxLines="6"
-            android:minHeight="48dp" />
+            android:minHeight="48dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="10dp"
+            android:textColor="@color/border2"
+            android:textColorHint="@color/border1"
+            tools:ignore="TextContrastCheck" />
 
         <Button
             android:id="@+id/btnSend"
-            android:text="➞"
-            android:textSize="14sp"
+            android:tooltipText="Send"
+            android:text=""
+            android:textSize="17sp"
+            android:textStyle="bold"
             android:clickable="true"
-            android:layout_width="64dp"
+            android:layout_width="48dp"
             android:layout_height="48dp"
             android:gravity="center"
             android:layout_gravity="bottom"
-            android:layout_marginRight="5dp"/>
+            android:padding="4dp"
+            android:layout_marginEnd="16dp"
+            android:foreground="@drawable/ic_send_button"
+            android:foregroundGravity="center"
+            android:background="@drawable/send_button_bg"/>
 
     </LinearLayout>
 

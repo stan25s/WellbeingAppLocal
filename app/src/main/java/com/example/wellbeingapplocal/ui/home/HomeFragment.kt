@@ -10,21 +10,22 @@ import android.widget.Toast
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wellbeingapplocal.*
+import com.example.wellbeingapplocal.ChatApp.Companion.user
 import com.example.wellbeingapplocal.databinding.FragmentHomeBinding
-import com.google.android.gms.tasks.Task
-import com.google.firebase.functions.FirebaseFunctions
-import com.google.firebase.functions.FirebaseFunctionsException
 import com.pusher.client.Pusher
 import com.pusher.client.PusherOptions
 import kotlinx.android.synthetic.main.fragment_home.*
+import org.json.JSONArray
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class HomeFragment : Fragment() {
@@ -37,20 +38,21 @@ class HomeFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
+    private lateinit var viewModel: HomeViewModel
+
     private lateinit var adapter: MessageAdapter
 
     private var pusherAppKey = "PUSHER_APP_KEY"
     private var pusherAppCluster = "PUSHER_CLUSTER"
-    private val mFunctions: FirebaseFunctions = FirebaseFunctions.getInstance()
-    //mFunctions = FirebaseFunctions.getInstance();
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
+//        val homeViewModel =
+//            ViewModelProvider(this).get(HomeViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -78,18 +80,26 @@ class HomeFragment : Fragment() {
         adapter = context?.let { MessageAdapter(it) }!!
         messageList.adapter = adapter
 
+        //When this view is initially created, initialise the recyclerview with messages
+        viewModel.messages.value?.let { adapter.updateMessages(it) }
+
         //Only use this for testing!! Then delete
         //val sharedPrefs : SharedPreferences = getp
-        ChatApp.user = "testUser"
+        user = "testUser"
 
         btnSend.setOnClickListener {
             if(txtMessage.text.isNotEmpty()) {
+                var addBotText = txtMessage.text.toString()
+                if(!addBotText.startsWith("@bot")) {
+                    addBotText = "@bot" + addBotText
+                }
                 val message = Message(
-                    ChatApp.user,
-                    txtMessage.text.toString(),
+                    user,
+                    addBotText,
                     Calendar.getInstance().timeInMillis
                 )
 
+                println(message)
                 val call = ChatService.create().postMessage(message)
 
                 call.enqueue(object : Callback<Void> {
@@ -111,8 +121,14 @@ class HomeFragment : Fragment() {
                 Toast.makeText(context,"Message should not be empty", Toast.LENGTH_SHORT).show()
             }
         }
-
-
+        //val viewModel: HomeViewModel by viewModels()
+        viewModel.messages.observe(viewLifecycleOwner, androidx.lifecycle.Observer { messages ->
+            for(i in messages) {
+                if(!adapter.getMessages().contains(i)) {
+                    adapter.addMessage(i);
+                }
+            }
+        })
     }
 
     private fun resetInput() {
@@ -134,15 +150,52 @@ class HomeFragment : Fragment() {
 
         channel.bind("new_message") { data ->
             val jsonObject = JSONObject(data.data)
+            //val messageJsonArray = JSONArray(jsonObject["message"])
+            val arrayAsString: StringBuilder = StringBuilder()
+            var messageJsonArray = JSONArray()
+            val user = jsonObject["user"]
+            //var messageArray = false
+            //var messageStringVal = ""
 
+
+            if (jsonObject["message"] is JSONArray) {
+                messageJsonArray = jsonObject["message"] as JSONArray
+            } else if(jsonObject["message"] is String) {
+                messageJsonArray = JSONArray(arrayOf(jsonObject["message"] as String))
+            }
+
+            var list : Array<String> = Array(messageJsonArray.length()) {
+                //Add message strings to list to display:
+                //Also remove '[""]' symbols around text and "\"
+                messageJsonArray.getString(it)
+            }
+
+            var newList = ArrayList<String>()
+            if(user == "bot") {
+                for(i in list.indices) {
+                    var tempString = ""
+                    tempString = list[i].substring(2, list[i].length-2)
+                    tempString = tempString.replace("\\", "")
+
+                    newList.add(tempString)
+                }
+            } else {
+                for(i in list) {
+                    newList.add(i.replace("@bot",""))
+                }
+            }
             try {
-                val message = Message(
-                    jsonObject["user"] as String,
-                    jsonObject["message"] as String,
-                    jsonObject["time"] as Long
-                )
+                var messages : ArrayList<Message> = ArrayList()
+                for (i in newList) {
+                    messages.add(Message(jsonObject["user"] as String, i, jsonObject["time"] as Long))
+                }
+
                 activity?.runOnUiThread {
-                    adapter.addMessage(message)
+                    for(i in messages) {
+                        adapter.addMessage(i)
+                        viewModel.addMessage(i)
+                    }
+                    //adapter.addMessage(message)
                     // scroll the RecyclerView to the last added element
                     messageList.scrollToPosition(adapter.itemCount - 1);
                 }

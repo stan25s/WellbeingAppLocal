@@ -23,12 +23,23 @@ class MessageAdapter (val context: Context) : RecyclerView.Adapter<MessageViewHo
         notifyDataSetChanged()
     }
 
+    fun updateMessages(newMessages: ArrayList<Message>) {
+        messages.clear()
+        for(i in newMessages) {
+            messages.add(i)
+        }
+    }
+
+    fun getMessages(): ArrayList<Message> {
+        return messages
+    }
+
     override fun getItemCount(): Int {
         return messages.size
     }
 
     override fun getItemViewType(position: Int): Int {
-        val message = messages.get(position)
+        val message = messages[position]
 
         return when {
             ChatApp.user == message.user -> {
@@ -71,11 +82,11 @@ class MessageAdapter (val context: Context) : RecyclerView.Adapter<MessageViewHo
 
     inner class MyMessageViewHolder (view: View) : MessageViewHolder(view) {
         private var messageText: TextView = view.txtMyMessage
-        private var timeText: TextView = view.txtMyMessageTime
+        //private var timeText: TextView = view.txtMyMessageTime
 
         override fun bind(message: Message) {
             messageText.text = message.message
-            timeText.text = DateUtils.formatDateTime(context, message.time, DateUtils.FORMAT_SHOW_TIME)
+            //timeText.text = DateUtils.formatDateTime(context, message.time, DateUtils.FORMAT_SHOW_TIME)
         }
     }
 
@@ -93,13 +104,11 @@ class MessageAdapter (val context: Context) : RecyclerView.Adapter<MessageViewHo
 
     inner class BotMessageViewHolder (view: View) : MessageViewHolder(view) {
         private var messageText: TextView = view.txtBotMessage
-        private var userText: TextView = view.txtBotUser
-        private var timeText: TextView = view.txtBotMessageTime
+        //private var timeText: TextView = view.txtBotMessageTime
 
         override fun bind(message: Message) {
             messageText.text = message.message
-            userText.text = message.user
-            timeText.text = DateUtils.formatDateTime(context, message.time, DateUtils.FORMAT_SHOW_TIME)
+            //timeText.text = DateUtils.formatDateTime(context, message.time, DateUtils.FORMAT_SHOW_TIME)
         }
     }
 }
