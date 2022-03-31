@@ -98,6 +98,7 @@ class HomeFragment : Fragment() {
                     addBotText,
                     Calendar.getInstance().timeInMillis
                 )
+                //TODO: Set-up sessions and send sessionID alongside message content
 
                 println(message)
                 val call = ChatService.create().postMessage(message)

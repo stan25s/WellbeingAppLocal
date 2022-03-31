@@ -35,10 +35,13 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        //TODO: If Session Variable in sharedPrefs is not set; instantiate with unique value for user.
     }
 
     override fun onStop() {
         super.onStop()
         //Use this to clear session variable
+        //TODO: Delete Session Variable from sharedPrefs
     }
 }
