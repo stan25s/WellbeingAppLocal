@@ -4,7 +4,7 @@ buildscript {
         google()
         mavenCentral()
         maven {
-            url 'https://kommunicate.jfrog.io/artifactory/kommunicate-android-sdk'
+            url 'https://jitpack.io'
         }
     }
     dependencies {

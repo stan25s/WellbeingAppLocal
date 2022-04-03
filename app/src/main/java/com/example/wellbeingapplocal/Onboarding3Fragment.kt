@@ -55,32 +55,29 @@ class Onboarding3Fragment : Fragment() {
                 //Toast.makeText(it.context, "Submitted!", Toast.LENGTH_SHORT).show()
                 val intent = Intent(it.context, MainActivity::class.java)
 
-                //Add user info
+                //Get user pref name from text box
                 val prefName = binding.editTextName.text.toString()
-                intent.putExtra("prefName", prefName)
-                intent.putExtra("avatar", chosenAvatar)
-
-                //Create new userID
-                val randomString = (1..8)
-                    .map { i -> kotlin.random.Random.nextInt(0, charPool.size) }
-                    .map(charPool::get)
-                    .joinToString("")
 
                 //Save to shared preferences
                 val sharedPreferences: SharedPreferences = it.context
                     .getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
                 val editor:SharedPreferences.Editor = sharedPreferences.edit()
+
+                //Create new userID
+                val randomString = (1..8)
+                    .map { charPool.random() }
+                    .joinToString("")
+
                 editor.putString("prefName", prefName)
-                editor.putString("avatar", chosenAvatar)
                 editor.putStringSet("focuses", (activity as OnBoarding).selectedFocus.toSet())
                 editor.putString("userID", randomString)
                 editor.apply()
 
+                //Start Main Activity, and pass user info as intent
                 startActivity(intent)
                 Toast.makeText(it.context, "Success!", Toast.LENGTH_SHORT).show()
-                //Start Main Activity, and pass user info as intent
+
                 activity?.finish()
-                //pager2.setCurrentItem()
             } else {
                 Toast.makeText(it.context, "Please Enter your Name Before Continuing", Toast.LENGTH_SHORT).show()
             }

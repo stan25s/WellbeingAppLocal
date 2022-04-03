@@ -18,7 +18,8 @@ class OnBoarding : FragmentActivity() {
 
     private val sharedPrefFile = "sharedprefs"
 
-    private val skipOnboardingForTesting = true
+    private val skipOnboardingForTesting = false
+    private val debugMode = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,12 +49,11 @@ class OnBoarding : FragmentActivity() {
          */
         val sharedPreferences: SharedPreferences? =
             this.getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
-        val userExists = sharedPreferences?.contains("prefName")
+        val userExists = sharedPreferences?.contains("prefName") == true && !sharedPreferences?.getString("prefName", null).isNullOrEmpty()
 
 
 
-        if (userExists == true || skipOnboardingForTesting) {
-
+        if (userExists && !debugMode) {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()

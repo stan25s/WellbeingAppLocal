@@ -1,6 +1,8 @@
 package com.example.wellbeingapplocal.ui.home
 
 import android.content.ContentValues.TAG
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -34,12 +36,14 @@ class HomeFragment : Fragment() {
 
     private val sharedPrefFile = "sharedprefs"
 
+    private lateinit var sessionId: String
+    private lateinit var focus: String
+
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
 
     private lateinit var viewModel: HomeViewModel
-
     private lateinit var adapter: MessageAdapter
 
     private var pusherAppKey = "PUSHER_APP_KEY"
@@ -56,6 +60,18 @@ class HomeFragment : Fragment() {
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+        val sharedPref = activity?.getSharedPreferences(
+            sharedPrefFile, Context.MODE_PRIVATE)
+        sessionId = sharedPref?.getString("sessionId", "session").toString()
+        //var defStringSet: Set<String>
+        var tempFocus = sharedPref?.getStringSet("focuses", null)
+        if (!tempFocus.isNullOrEmpty()) {
+            var list = tempFocus.toList()
+            focus = list.random()
+        } else {
+            focus = ""
+        }
 
 //        val textView: TextView = binding.textHome
 //        homeViewModel.text.observe(viewLifecycleOwner) {
@@ -85,7 +101,14 @@ class HomeFragment : Fragment() {
 
         //Only use this for testing!! Then delete
         //val sharedPrefs : SharedPreferences = getp
-        user = "testUser"
+        //user = "testUser"
+        val sharedPreferences: SharedPreferences = view.context
+            .getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
+        user = sharedPreferences.getString("prefName", null).toString()
+
+        if (user.isEmpty()) {
+            user = "nullUser"
+        }
 
         btnSend.setOnClickListener {
             if(txtMessage.text.isNotEmpty()) {
@@ -96,7 +119,9 @@ class HomeFragment : Fragment() {
                 val message = Message(
                     user,
                     addBotText,
-                    Calendar.getInstance().timeInMillis
+                    Calendar.getInstance().timeInMillis,
+                    sessionId,
+                    focus
                 )
                 //TODO: Set-up sessions and send sessionID alongside message content
 
@@ -188,7 +213,9 @@ class HomeFragment : Fragment() {
             try {
                 var messages : ArrayList<Message> = ArrayList()
                 for (i in newList) {
-                    messages.add(Message(jsonObject["user"] as String, i, jsonObject["time"] as Long))
+                    messages.add(
+                        Message(jsonObject["user"] as String, i,
+                            jsonObject["time"] as Long, sessionId, focus))
                 }
 
                 activity?.runOnUiThread {
