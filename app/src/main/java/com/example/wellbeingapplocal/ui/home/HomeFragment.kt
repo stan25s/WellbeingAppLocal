@@ -49,6 +49,13 @@ class HomeFragment : Fragment() {
     private var pusherAppKey = "PUSHER_APP_KEY"
     private var pusherAppCluster = "PUSHER_CLUSTER"
 
+    private var paramsobj : JSONObject = JSONObject()
+
+    private var mq1 : String = ""
+    private var mq2 : String = ""
+    private var fq1 : String = ""
+    private var jou : String = ""
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -65,19 +72,27 @@ class HomeFragment : Fragment() {
             sharedPrefFile, Context.MODE_PRIVATE)
         sessionId = sharedPref?.getString("sessionId", "session").toString()
         //var defStringSet: Set<String>
-        var tempFocus = sharedPref?.getStringSet("focuses", null)
+        val tempFocus = sharedPref?.getStringSet("focuses", null)
         if (!tempFocus.isNullOrEmpty()) {
-            var list = tempFocus.toList()
+            val list = tempFocus.toList()
             focus = list.random()
+            println(list.toString())
         } else {
-            focus = ""
+            focus = "_empty"
         }
 
-//        val textView: TextView = binding.textHome
-//        homeViewModel.text.observe(viewLifecycleOwner) {
-//            textView.text = it
-//        }
-
+        if (!viewModel.checkInData.value?.get("mq1").isNullOrEmpty()) {
+            mq1 = viewModel.checkInData.value?.get("mq1").toString()
+        }
+        if (!viewModel.checkInData.value?.get("mq2").isNullOrEmpty()) {
+            mq2 = viewModel.checkInData.value?.get("mq2").toString()
+        }
+        if (!viewModel.checkInData.value?.get("fq1").isNullOrEmpty()) {
+            fq1 = viewModel.checkInData.value?.get("fq1").toString()
+        }
+        if (!viewModel.checkInData.value?.get("jou").isNullOrEmpty()) {
+            jou = viewModel.checkInData.value?.get("jou").toString()
+        }
         return root
     }
 
@@ -110,6 +125,7 @@ class HomeFragment : Fragment() {
             user = "nullUser"
         }
 
+
         btnSend.setOnClickListener {
             if(txtMessage.text.isNotEmpty()) {
                 var addBotText = txtMessage.text.toString()
@@ -121,16 +137,40 @@ class HomeFragment : Fragment() {
                     addBotText,
                     Calendar.getInstance().timeInMillis,
                     sessionId,
-                    focus
+                    focus,
+                    //Add params jsonObject here
+                    mq1,
+                    mq2,
+                    fq1,
+                    jou
                 )
                 //TODO: Set-up sessions and send sessionID alongside message content
 
+//                if (mq1Received) {
+//                    //handle saving question responses here
+//                    viewModel.addAnswerToMap("mq1", txtMessage.text.toString())
+//                    mq1Received = false
+//                } else if (mq2Received) {
+//                    //handle saving question responses here
+//
+//                    mq2Received = false
+//                } else if (fq1Received) {
+//                    //handle saving question responses here
+//
+//                    fq1Received = false
+//                } else if (jouReceived) {
+//                    //handle saving question responses here
+//
+//                    jouReceived = false
+//                }
+
                 println(message)
                 val call = ChatService.create().postMessage(message)
-
+                resetInput()
                 call.enqueue(object : Callback<Void> {
+
                     override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                        resetInput()
+                        //resetInput()
                         if (!response.isSuccessful) {
                             Log.e(TAG, response.code().toString());
                             Toast.makeText(context,"Response was not successful", Toast.LENGTH_SHORT).show()
@@ -138,7 +178,7 @@ class HomeFragment : Fragment() {
                     }
 
                     override fun onFailure(call: Call<Void>, t: Throwable) {
-                        resetInput()
+                        //resetInput()
                         Log.e(TAG, t.toString());
                         Toast.makeText(context,"Error when calling the service", Toast.LENGTH_SHORT).show()
                     }
@@ -154,6 +194,10 @@ class HomeFragment : Fragment() {
                     adapter.addMessage(i);
                 }
             }
+        })
+
+        viewModel.checkInData.observe(viewLifecycleOwner, androidx.lifecycle.Observer { checkInData ->
+            //Not sure if I need this Observer
         })
     }
 
@@ -176,13 +220,8 @@ class HomeFragment : Fragment() {
 
         channel.bind("new_message") { data ->
             val jsonObject = JSONObject(data.data)
-            //val messageJsonArray = JSONArray(jsonObject["message"])
-            val arrayAsString: StringBuilder = StringBuilder()
             var messageJsonArray = JSONArray()
             val user = jsonObject["user"]
-            //var messageArray = false
-            //var messageStringVal = ""
-
 
             if (jsonObject["message"] is JSONArray) {
                 messageJsonArray = jsonObject["message"] as JSONArray
@@ -190,18 +229,65 @@ class HomeFragment : Fragment() {
                 messageJsonArray = JSONArray(arrayOf(jsonObject["message"] as String))
             }
 
-            var list : Array<String> = Array(messageJsonArray.length()) {
+            val list : Array<String> = Array(messageJsonArray.length()) {
                 //Add message strings to list to display:
                 //Also remove '[""]' symbols around text and "\"
                 messageJsonArray.getString(it)
             }
 
-            var newList = ArrayList<String>()
+            val newList = ArrayList<String>()
             if(user == "bot") {
                 for(i in list.indices) {
                     var tempString = ""
                     tempString = list[i].substring(2, list[i].length-2)
                     tempString = tempString.replace("\\", "")
+
+                    //Check for code at end of message
+//                    if (tempString.last() == '}') {
+//                        val messageCode = tempString.split("}")
+//                        when (messageCode[1]) {
+//                            "mq1" -> mq1Received = true
+//                            "mq2" -> mq2Received = true
+//                            "fq1" -> fq1Received = true
+//                            "jou" -> jouReceived = true
+//                            "smq1" -> {
+//                                viewModel.checkInData.value?.set("mq1", "skipped")
+//                                mq1Received = false
+//                            }
+//                            "smq2" -> {
+//                                viewModel.checkInData.value?.set("mq2", "skipped")
+//                                mq2Received = false
+//                            }
+//                            "sfq1" -> {
+//                                viewModel.checkInData.value?.set("fq1", "skipped")
+//                                fq1Received = false
+//                            }
+//                            "sjou" -> {
+//                                viewModel.setJournalString("")
+//                                jouReceived = false
+//                            }
+//                        }
+//                    }
+                    if (jsonObject["mq1"] as String != "") {
+                        mq1 = jsonObject["mq1"] as String
+                        viewModel.addAnswerToMap("mq1", mq1)
+                    }
+                    if (jsonObject["mq2"] as String != "") {
+                        mq2 = jsonObject["mq1"] as String
+                        viewModel.addAnswerToMap("mq2", mq2)
+                    }
+                    if (jsonObject["fq1"] as String != "") {
+                        fq1 = jsonObject["mq1"] as String
+                        viewModel.addAnswerToMap("fq1", fq1)
+                        //Save answers to file
+                        context?.let { viewModel.saveAnswersToFileAndClear(it) }
+                    }
+                    if (jsonObject["jou"] as String != "") {
+                        jou = jsonObject["jou"] as String
+                        viewModel.setJournalString(jou)
+                        //Save answers to file
+                        context?.let { viewModel.saveJournalToFileAndClear(it) }
+                    }
 
                     newList.add(tempString)
                 }
@@ -215,7 +301,7 @@ class HomeFragment : Fragment() {
                 for (i in newList) {
                     messages.add(
                         Message(jsonObject["user"] as String, i,
-                            jsonObject["time"] as Long, sessionId, focus))
+                            jsonObject["time"] as Long, sessionId, focus, mq1, mq2, fq1, jou))
                 }
 
                 activity?.runOnUiThread {
@@ -223,7 +309,7 @@ class HomeFragment : Fragment() {
                         adapter.addMessage(i)
                         viewModel.addMessage(i)
                     }
-                    //adapter.addMessage(message)
+
                     // scroll the RecyclerView to the last added element
                     messageList.scrollToPosition(adapter.itemCount - 1);
                 }
