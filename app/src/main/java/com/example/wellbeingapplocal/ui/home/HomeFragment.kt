@@ -165,6 +165,10 @@ class HomeFragment : Fragment() {
 //                }
 
                 println(message)
+                println("mq1: $mq1")
+                println("mq2: $mq2")
+                println("fq1: $fq1")
+                println("jou: $jou")
                 val call = ChatService.create().postMessage(message)
                 resetInput()
                 call.enqueue(object : Callback<Void> {
@@ -273,11 +277,11 @@ class HomeFragment : Fragment() {
                         viewModel.addAnswerToMap("mq1", mq1)
                     }
                     if (jsonObject["mq2"] as String != "") {
-                        mq2 = jsonObject["mq1"] as String
+                        mq2 = jsonObject["mq2"] as String
                         viewModel.addAnswerToMap("mq2", mq2)
                     }
                     if (jsonObject["fq1"] as String != "") {
-                        fq1 = jsonObject["mq1"] as String
+                        fq1 = jsonObject["fq1"] as String
                         viewModel.addAnswerToMap("fq1", fq1)
                         //Save answers to file
                         context?.let { viewModel.saveAnswersToFileAndClear(it) }
