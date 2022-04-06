@@ -10,6 +10,7 @@
 
     <color name="bg1">#f9f7f6</color>
     <color name="bg2">#E8E0DA</color>
+    <color name="bg3">#FDFCFC</color>
     <color name="border1">#707070</color>
     <color name="border2">#2E2E2E</color>
     <color name="accent">#5960EC</color>
