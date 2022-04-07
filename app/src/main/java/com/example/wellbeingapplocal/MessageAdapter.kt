@@ -77,7 +77,7 @@ class MessageAdapter (val context: Context) : RecyclerView.Adapter<MessageViewHo
     override fun onBindViewHolder(holder: MessageViewHolder, position: Int) {
         val message = messages[position]
 
-        holder?.bind(message)
+        holder.bind(message)
     }
 
     inner class MyMessageViewHolder (view: View) : MessageViewHolder(view) {

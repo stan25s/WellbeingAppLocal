@@ -10,7 +10,7 @@
         android:id="@+id/messageList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="110dp"
+        android:layout_marginBottom="75dp"
         android:scrollbars="vertical"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -36,7 +36,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginBottom="58dp">
+        android:layout_marginBottom="15dp">
 
         <EditText
             android:id="@+id/txtMessage"
@@ -50,12 +50,14 @@
             android:hint="Type your message here"
             android:inputType="textMultiLine"
             android:maxLines="6"
+            android:maxLength="240"
             android:minHeight="48dp"
             android:paddingLeft="12dp"
             android:paddingRight="10dp"
             android:textColor="@color/border2"
             android:textColorHint="@color/border1"
-            tools:ignore="TextContrastCheck" />
+            tools:ignore="TextContrastCheck"
+            android:importantForAutofill="no" />
 
         <Button
             android:id="@+id/btnSend"
@@ -72,7 +74,8 @@
             android:layout_marginEnd="16dp"
             android:foreground="@drawable/ic_send_button"
             android:foregroundGravity="center"
-            android:background="@drawable/send_button_bg"/>
+            android:background="@drawable/send_button_bg"
+            android:contentDescription="Send Button"/>
 
     </LinearLayout>
 

@@ -53,12 +53,16 @@ class HomeViewModel : ViewModel() {
         _checkinData.value?.put(question, answer)
     }
 
+    fun removeAnswerFromMap(question: String) {
+        _checkinData.value?.remove(question)
+    }
+
     //Store journal entry as string
     fun setJournalString(input: String) {
         _journal.value = input
     }
 
-    fun saveJournalToFileAndClear(context: Context) {
+    fun saveJournalToFile(context: Context) {
 //        val sharedPrefFile = "sharedprefs"
 //        val sharedPreferences: SharedPreferences = context
 //            .getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
@@ -66,7 +70,9 @@ class HomeViewModel : ViewModel() {
 
 
         //save to file
-        val fileName = "journal_" + getDate(Calendar.getInstance().timeInMillis, "dd/MM/yyyy")
+        val fileName =
+            "journal_" + getDate(Calendar.getInstance().timeInMillis,
+                "dd-MM-yyyy") + ".txt"
         val fileOutputStream : FileOutputStream
 
         try {
@@ -76,25 +82,27 @@ class HomeViewModel : ViewModel() {
             e.printStackTrace()
         }
 
-        //reset value
+    }
+
+    fun clearJournal() {
         _journal.value = ""
     }
 
-    fun saveAnswersToFileAndClear(context: Context) {
+    fun saveAnswersToFile(context: Context) {
         //generate string from map
         val sb : StringBuilder = StringBuilder()
         for(i in _checkinData.value?.keys!!) {
-            sb.append("{")
+            sb.append("{{")
             sb.append(i)
-            sb.append("}:{")
+            sb.append("{{")
             sb.append(_checkinData.value!![i])
-            sb.append("}")
+            sb.append("{{")
             sb.appendLine()
         }
         val stringToWrite = sb.toString()
 
         //save to file
-        val fileName = "checkin_" + getDate(Calendar.getInstance().timeInMillis, "dd/MM/yyyy")
+        val fileName = "checkin_" + getDate(Calendar.getInstance().timeInMillis, "dd-MM-yyyy") + ".txt"
         val fileOutputStream : FileOutputStream
 
         try {
@@ -104,6 +112,10 @@ class HomeViewModel : ViewModel() {
             e.printStackTrace()
         }
 
+        //_checkinData.value?.clear()
+    }
+
+    fun clearAnswerMap() {
         _checkinData.value?.clear()
     }
 

@@ -1,0 +1,38 @@
+<resources>
+    <!-- Reply Preference -->
+    <string-array name="reply_entries">
+        <item>Reply</item>
+        <item>Reply to all</item>
+    </string-array>
+
+    <string-array name="reply_values">
+        <item>reply</item>
+        <item>reply_all</item>
+    </string-array>
+
+    <!-- Reminder Frequency Preference -->
+    <string-array name="frequency_entries">
+        <item>Daily</item>
+        <item>Every 2 Days</item>
+    </string-array>
+
+    <string-array name="frequency_values">
+        <item>daily</item>
+        <item>2_daily</item>
+    </string-array>
+
+    <!-- Focus Multi-Select Preference -->
+    <string-array name="focus_entries">
+        <item>Anxiety</item>
+        <item>Motivation</item>
+        <item>Depression</item>
+        <item>Energy</item>
+    </string-array>
+
+    <string-array name="focus_values">
+        <item>anxiety</item>
+        <item>motivation</item>
+        <item>depression</item>
+        <item>energy</item>
+    </string-array>
+</resources>

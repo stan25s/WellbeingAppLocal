@@ -15,6 +15,7 @@ import android.view.ViewGroup
 import android.widget.PopupWindow
 import android.widget.Toast
 import androidx.appcompat.widget.PopupMenu
+import androidx.preference.PreferenceManager
 import androidx.viewpager2.widget.ViewPager2
 import com.example.wellbeingapplocal.databinding.FragmentOnboarding1Binding
 import com.example.wellbeingapplocal.databinding.FragmentOnboarding3Binding
@@ -24,7 +25,7 @@ class Onboarding3Fragment : Fragment() {
 
     private lateinit var binding: FragmentOnboarding3Binding
 
-    private val sharedPrefFile = "sharedprefs"
+    //private val sharedPrefFile = "sharedprefs"
 
     private val charPool : List<Char> = ('a'..'z') + ('A'..'Z') + ('0'..'9')
 
@@ -59,9 +60,8 @@ class Onboarding3Fragment : Fragment() {
                 val prefName = binding.editTextName.text.toString()
 
                 //Save to shared preferences
-                val sharedPreferences: SharedPreferences = it.context
-                    .getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
-                val editor:SharedPreferences.Editor = sharedPreferences.edit()
+                val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+                val editor: SharedPreferences.Editor = sharedPreferences.edit()
 
                 //Create new userID
                 val randomString = (1..8)

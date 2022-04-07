@@ -78,24 +78,24 @@ class Onboarding2Fragment : Fragment() {
             (activity as OnBoarding).selectedFocus = focusTopic
         }
 
-        binding.toggleButton3.setOnClickListener {
-            var textVal = binding.toggleButton3.textOff.toString()
-            var selected = binding.toggleButton3.isChecked
-            var focusTopic = (activity as OnBoarding).selectedFocus
-
-            //Add the selected topic to the focus list, and don't allow more than 3 selections
-            if (selected) {
-                if (focusTopic.size < 3) {
-                    focusTopic.add(textVal)
-                } else {
-                    binding.toggleButton3.isChecked = false
-                }
-            } else {
-                focusTopic.remove(textVal)
-            }
-
-            (activity as OnBoarding).selectedFocus = focusTopic
-        }
+//        binding.toggleButton3.setOnClickListener {
+//            var textVal = binding.toggleButton3.textOff.toString()
+//            var selected = binding.toggleButton3.isChecked
+//            var focusTopic = (activity as OnBoarding).selectedFocus
+//
+//            //Add the selected topic to the focus list, and don't allow more than 3 selections
+//            if (selected) {
+//                if (focusTopic.size < 3) {
+//                    focusTopic.add(textVal)
+//                } else {
+//                    binding.toggleButton3.isChecked = false
+//                }
+//            } else {
+//                focusTopic.remove(textVal)
+//            }
+//
+//            (activity as OnBoarding).selectedFocus = focusTopic
+//        }
 
         binding.toggleButton4.setOnClickListener {
             var textVal = binding.toggleButton4.textOff.toString()

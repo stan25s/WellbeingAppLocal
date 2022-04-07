@@ -24,6 +24,46 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //TODO: If Session Variable in sharedPrefs is not set; instantiate with unique value for user.
+
+        newSession()
+
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        val navView: BottomNavigationView = binding.navView
+
+        val navController = findNavController(R.id.nav_host_fragment_activity_main)
+        // Passing each menu ID as a set of Ids because each
+        // menu should be considered as top level destinations.
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.navigation_dashboard, R.id.navigation_home, R.id.navigation_notifications
+            )
+        )
+        //setupActionBarWithNavController(navController, appBarConfiguration)
+        navView.setupWithNavController(navController)
+
+
+
+    }
+
+    override fun onStop() {
+        super.onStop()
+        clearSession()
+        //Use this to clear session variable
+        //TODO: Delete Session Variable from sharedPrefs
+    }
+
+    private fun clearSession() {
+        val sharedPreferences: SharedPreferences = this.applicationContext
+            .getSharedPreferences(sharedPrefsFile, Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putString("sessionId", "");
+        //editor.apply()
+        editor.apply()
+    }
+
+    public fun newSession() {
         val sharedPreferences: SharedPreferences = this.applicationContext
             .getSharedPreferences(sharedPrefsFile, Context.MODE_PRIVATE)
 
@@ -41,35 +81,5 @@ class MainActivity : AppCompatActivity() {
         editor.putString("sessionId", sessionId);
         //editor.apply()
         editor.apply()
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        val navView: BottomNavigationView = binding.navView
-
-        val navController = findNavController(R.id.nav_host_fragment_activity_main)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.navigation_dashboard, R.id.navigation_home, R.id.navigation_notifications
-            )
-        )
-        setupActionBarWithNavController(navController, appBarConfiguration)
-        navView.setupWithNavController(navController)
-
-
-
-    }
-
-    override fun onStop() {
-        super.onStop()
-        val sharedPreferences: SharedPreferences = this.applicationContext
-            .getSharedPreferences(sharedPrefsFile, Context.MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-        editor.putString("sessionId", "");
-        //editor.apply()
-        editor.apply()
-        //Use this to clear session variable
-        //TODO: Delete Session Variable from sharedPrefs
     }
 }

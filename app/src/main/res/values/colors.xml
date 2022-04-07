@@ -18,4 +18,12 @@
     <color name="accent_muted">#e5e6ff</color>
     <color name="secondary">#F85EAE</color>
     <color name="secondary_dark">#971257</color>
+
+    <!-- Emotion Colours -->
+    <color name="happy">#FFD740</color>
+    <color name="calm">#64FFDA</color>
+    <color name="powerful">#FFAB40</color>
+    <color name="sad">#536DFE</color>
+    <color name="angry">#FF5252</color>
+    <color name="anxious">#7C4DFF</color>
 </resources>

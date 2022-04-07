@@ -1,0 +1,44 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="@string/notification_header">
+
+        <SwitchPreferenceCompat
+            app:key="reminders-enabled"
+            app:title="@string/reminder_title"
+            app:useSimpleSummaryProvider="true" />
+
+        <ListPreference
+            app:defaultValue="daily"
+            app:entries="@array/frequency_entries"
+            app:entryValues="@array/frequency_values"
+            app:key="reminder-frequency"
+            app:title="@string/notification_title"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/focus_header">
+
+<!--        <SwitchPreferenceCompat-->
+<!--            app:key="sync"-->
+<!--            app:title="@string/sync_title" />-->
+
+<!--        <SwitchPreferenceCompat-->
+<!--            app:dependency="sync"-->
+<!--            app:key="attachment"-->
+<!--            app:summaryOff="@string/attachment_summary_off"-->
+<!--            app:summaryOn="@string/attachment_summary_on"-->
+<!--            app:title="@string/attachment_title" />-->
+
+        <MultiSelectListPreference
+            android:defaultValue=""
+            android:entries="@array/focus_entries"
+            android:entryValues="@array/focus_values"
+            android:key="multi_select_list_preference_1"
+            android:title="Change Focus Topics"
+            app:useSimpleSummaryProvider="true"/>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

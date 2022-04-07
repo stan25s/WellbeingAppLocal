@@ -3,6 +3,7 @@ package com.example.wellbeingapplocal.ui.home
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.SharedPreferences
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,8 +13,8 @@ import android.widget.Toast
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wellbeingapplocal.*
 import com.example.wellbeingapplocal.ChatApp.Companion.user
@@ -27,14 +28,13 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
 
-    private val sharedPrefFile = "sharedprefs"
+    //private val sharedPrefFile = "sharedprefs"
 
     private lateinit var sessionId: String
     private lateinit var focus: String
@@ -53,8 +53,15 @@ class HomeFragment : Fragment() {
 
     private var mq1 : String = ""
     private var mq2 : String = ""
-    private var fq1 : String = ""
+    private var fqq : String = ""
+    private var fqa : String = ""
     private var jou : String = ""
+    private var gratQ : String = ""
+    private var gratA : String = ""
+
+    private var jouReceived : Boolean = false
+
+    private var gratReceived : Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -68,8 +75,7 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val sharedPref = activity?.getSharedPreferences(
-            sharedPrefFile, Context.MODE_PRIVATE)
+        val sharedPref = context?.let { PreferenceManager.getDefaultSharedPreferences(it) }
         sessionId = sharedPref?.getString("sessionId", "session").toString()
         //var defStringSet: Set<String>
         val tempFocus = sharedPref?.getStringSet("focuses", null)
@@ -88,11 +94,28 @@ class HomeFragment : Fragment() {
             mq2 = viewModel.checkInData.value?.get("mq2").toString()
         }
         if (!viewModel.checkInData.value?.get("fq1").isNullOrEmpty()) {
-            fq1 = viewModel.checkInData.value?.get("fq1").toString()
+            fqa = viewModel.checkInData.value?.get("fq1").toString()
         }
         if (!viewModel.checkInData.value?.get("jou").isNullOrEmpty()) {
             jou = viewModel.checkInData.value?.get("jou").toString()
         }
+
+        val prefs: SharedPreferences = context?.let {
+            PreferenceManager.getDefaultSharedPreferences(
+                it
+            )
+        }!!
+
+        // Instance field for listener
+        val listener = OnSharedPreferenceChangeListener { prefs, key ->
+            // Your Implementation
+            if (key == "sessionId") {
+                sessionId = prefs.getString(key, "").toString()
+            }
+        }
+
+        prefs.registerOnSharedPreferenceChangeListener(listener)
+
         return root
     }
 
@@ -113,12 +136,19 @@ class HomeFragment : Fragment() {
 
         //When this view is initially created, initialise the recyclerview with messages
         viewModel.messages.value?.let { adapter.updateMessages(it) }
+        if (viewModel.messages.value?.size == 0) {
+            viewModel.clearJournal()
+            viewModel.clearAnswerMap()
+        }
 
         //Only use this for testing!! Then delete
         //val sharedPrefs : SharedPreferences = getp
         //user = "testUser"
-        val sharedPreferences: SharedPreferences = view.context
-            .getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
+        val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(
+            requireContext()
+        )
+        //val sharedPreferences: SharedPreferences = view.context
+            //.getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
         user = sharedPreferences.getString("prefName", null).toString()
 
         if (user.isEmpty()) {
@@ -141,34 +171,33 @@ class HomeFragment : Fragment() {
                     //Add params jsonObject here
                     mq1,
                     mq2,
-                    fq1,
-                    jou
+                    gratQ,
+                    gratA,
+                    fqa
                 )
                 //TODO: Set-up sessions and send sessionID alongside message content
 
-//                if (mq1Received) {
-//                    //handle saving question responses here
-//                    viewModel.addAnswerToMap("mq1", txtMessage.text.toString())
-//                    mq1Received = false
-//                } else if (mq2Received) {
-//                    //handle saving question responses here
-//
-//                    mq2Received = false
-//                } else if (fq1Received) {
-//                    //handle saving question responses here
-//
-//                    fq1Received = false
-//                } else if (jouReceived) {
-//                    //handle saving question responses here
-//
-//                    jouReceived = false
-//                }
+                if(jouReceived) {
+                    //add journal message to viewModel and save it
+                    jou = txtMessage.text.toString()
+                    viewModel.setJournalString(jou)
+                    jouReceived = false
+                    viewModel.saveJournalToFile(requireContext())
+                }
+                if(gratReceived) {
+                    //Add gratitude response to viewModel
+                    gratA = txtMessage.text.toString()
+                    viewModel.addAnswerToMap("gratA", gratA)
+                    gratReceived = false
+                }
 
                 println(message)
                 println("mq1: $mq1")
                 println("mq2: $mq2")
-                println("fq1: $fq1")
+                println("fq1: $fqa")
                 println("jou: $jou")
+                println("gratQ: $gratQ")
+                println("gratA: $gratA")
                 val call = ChatService.create().postMessage(message)
                 resetInput()
                 call.enqueue(object : Callback<Void> {
@@ -247,31 +276,40 @@ class HomeFragment : Fragment() {
                     tempString = tempString.replace("\\", "")
 
                     //Check for code at end of message
-//                    if (tempString.last() == '}') {
-//                        val messageCode = tempString.split("}")
-//                        when (messageCode[1]) {
-//                            "mq1" -> mq1Received = true
-//                            "mq2" -> mq2Received = true
-//                            "fq1" -> fq1Received = true
-//                            "jou" -> jouReceived = true
-//                            "smq1" -> {
-//                                viewModel.checkInData.value?.set("mq1", "skipped")
-//                                mq1Received = false
-//                            }
-//                            "smq2" -> {
-//                                viewModel.checkInData.value?.set("mq2", "skipped")
-//                                mq2Received = false
-//                            }
-//                            "sfq1" -> {
-//                                viewModel.checkInData.value?.set("fq1", "skipped")
-//                                fq1Received = false
-//                            }
-//                            "sjou" -> {
-//                                viewModel.setJournalString("")
-//                                jouReceived = false
-//                            }
-//                        }
-//                    }
+                    if (tempString.last() == '}') {
+                        val messageCode = tempString.split("}")
+                        when (messageCode[1]) {
+                            "grat" -> {
+                                //Save gratitude question and set flag to record answer when user
+                                //sends message
+                                gratQ = messageCode[0]
+                                gratReceived = true
+                            }
+                            "fqq" -> {
+                                fqq = messageCode[0]
+                                viewModel.addAnswerToMap("fqQ", fqq)
+                            }
+                            "jou" -> jouReceived = true
+                            "sjou" -> {
+                                jouReceived = false
+                                viewModel.clearJournal()
+                            }
+                            "sgrat" -> {
+                                gratReceived = false
+                                viewModel.removeAnswerFromMap("gratA")
+                                viewModel.removeAnswerFromMap("gratQ")
+                            }
+                            "end" -> {
+                                context?.let { viewModel.saveAnswersToFile(it) }
+                                context?.let { viewModel.saveJournalToFile(it) }
+                                //Sets a new Session Variable
+                                (activity as MainActivity).newSession()
+                                //viewModel.clearAnswerMap()
+                                //viewModel.clearJournal()
+                            }
+                        }
+                        tempString = messageCode[0]
+                    }
                     if (jsonObject["mq1"] as String != "") {
                         mq1 = jsonObject["mq1"] as String
                         viewModel.addAnswerToMap("mq1", mq1)
@@ -281,16 +319,14 @@ class HomeFragment : Fragment() {
                         viewModel.addAnswerToMap("mq2", mq2)
                     }
                     if (jsonObject["fq1"] as String != "") {
-                        fq1 = jsonObject["fq1"] as String
-                        viewModel.addAnswerToMap("fq1", fq1)
-                        //Save answers to file
-                        context?.let { viewModel.saveAnswersToFileAndClear(it) }
+                        fqa = jsonObject["fq1"] as String
+                        viewModel.addAnswerToMap("fq1", fqa)
                     }
-                    if (jsonObject["jou"] as String != "") {
-                        jou = jsonObject["jou"] as String
-                        viewModel.setJournalString(jou)
+                    if (jsonObject["gratQ"] as String != "") {
+                        gratQ = jsonObject["gratQ"] as String
+                        viewModel.addAnswerToMap("gratQ", gratQ)
                         //Save answers to file
-                        context?.let { viewModel.saveJournalToFileAndClear(it) }
+                        context?.let { viewModel.saveAnswersToFile(it) }
                     }
 
                     newList.add(tempString)
@@ -305,7 +341,7 @@ class HomeFragment : Fragment() {
                 for (i in newList) {
                     messages.add(
                         Message(jsonObject["user"] as String, i,
-                            jsonObject["time"] as Long, sessionId, focus, mq1, mq2, fq1, jou))
+                            jsonObject["time"] as Long, sessionId, focus, mq1, mq2, gratQ, gratA, fqa))
                 }
 
                 activity?.runOnUiThread {

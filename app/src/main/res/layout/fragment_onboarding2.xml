@@ -70,18 +70,18 @@
                     android:textOff="Anxiety"
                     android:textOn="Anxiety ✓" />
 
-                <ToggleButton
-                    android:id="@+id/toggleButton3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:fontFamily="sans-serif-medium"
-                    android:text="ToggleButton"
-                    android:textAllCaps="false"
-                    android:background="@drawable/button_toggle"
-                    android:textColor="@drawable/button_toggle_text_color"
-                    android:textOff="Gratitude"
-                    android:textOn="Gratitude ✓" />
+<!--                <ToggleButton-->
+<!--                    android:id="@+id/toggleButton3"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_margin="5dp"-->
+<!--                    android:fontFamily="sans-serif-medium"-->
+<!--                    android:text="ToggleButton"-->
+<!--                    android:textAllCaps="false"-->
+<!--                    android:background="@drawable/button_toggle"-->
+<!--                    android:textColor="@drawable/button_toggle_text_color"-->
+<!--                    android:textOff="Gratitude"-->
+<!--                    android:textOn="Gratitude ✓" />-->
             </TableRow>
 
             <TableRow

@@ -15,27 +15,36 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginBottom="100dp">
 
-        <ImageView
-            android:id="@+id/imgMain"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginBottom="20dp"
-            android:contentDescription="@string/no_image"
-            android:foreground="@drawable/circle_back"
-            android:scaleType="fitXY"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+<!--        <ImageView-->
+<!--            android:id="@+id/imgAvatar"-->
+<!--            android:layout_width="100dp"-->
+<!--            android:layout_height="100dp"-->
+<!--            android:layout_marginBottom="20dp"-->
+<!--            android:contentDescription="@string/no_image"-->
+<!--            android:foreground="@drawable/circle_back"-->
+<!--            android:scaleType="fitXY"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
 
         <ImageView
-            android:id="@+id/editImg"
+            android:id="@+id/imgMain"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/edit_image_icon"
-            android:contentDescription="Edit Text"
-            app:layout_constraintBottom_toBottomOf="@id/imgMain"
-            app:layout_constraintEnd_toEndOf="@id/imgMain" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:contentDescription="RobotIllustration" />
+
+<!--        <ImageView-->
+<!--            android:id="@+id/editImg"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:background="@drawable/edit_image_icon"-->
+<!--            android:contentDescription="Edit Text"-->
+<!--            app:layout_constraintBottom_toBottomOf="@id/imgMain"-->
+<!--            app:layout_constraintEnd_toEndOf="@id/imgMain" />-->
 
         <TextView
             android:id="@+id/txtMain"
