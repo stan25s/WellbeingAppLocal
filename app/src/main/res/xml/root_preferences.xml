@@ -31,13 +31,6 @@
 <!--            app:summaryOn="@string/attachment_summary_on"-->
 <!--            app:title="@string/attachment_title" />-->
 
-        <MultiSelectListPreference
-            android:defaultValue=""
-            android:entries="@array/focus_entries"
-            android:entryValues="@array/focus_values"
-            android:key="multi_select_list_preference_1"
-            android:title="Change Focus Topics"
-            app:useSimpleSummaryProvider="true"/>
 
     </PreferenceCategory>
 

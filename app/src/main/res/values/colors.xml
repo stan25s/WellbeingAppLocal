@@ -11,6 +11,7 @@
     <color name="bg1">#f9f7f6</color>
     <color name="bg2">#E8E0DA</color>
     <color name="bg3">#FDFCFC</color>
+    <color name="nodata">#A1A1A1</color>
     <color name="border1">#707070</color>
     <color name="border2">#2E2E2E</color>
     <color name="accent">#5960EC</color>
@@ -20,10 +21,10 @@
     <color name="secondary_dark">#971257</color>
 
     <!-- Emotion Colours -->
-    <color name="happy">#FFD740</color>
-    <color name="calm">#64FFDA</color>
-    <color name="powerful">#FFAB40</color>
+    <color name="happy">#FFAB00</color>
+    <color name="calm">#0091EA</color>
+    <color name="powerful">#FF6E40</color>
     <color name="sad">#536DFE</color>
-    <color name="angry">#FF5252</color>
+    <color name="angry">#FF1744</color>
     <color name="anxious">#7C4DFF</color>
 </resources>

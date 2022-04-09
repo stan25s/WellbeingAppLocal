@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.journal_item.view.*
@@ -54,24 +55,41 @@ class JournalAdapter (val context: Context) : RecyclerView.Adapter<JournalHolder
         private var focusQ: TextView = view.focus_question
         private var focusA: TextView = view.focus_answer
         private var journalText: TextView = view.journal_text
+        private var focusView: ConstraintLayout = view.focusQ_view
+        private var gratitudeView: ConstraintLayout = view.gratitude_view
 
-        private var moodColor: View = view.mood_colour
+        private var moodColour: View = view.mood_colour
 
         override fun bind(journalEntry:JournalEntry) {
             date.text = journalEntry.date
             dayRating.text = journalEntry.day_rating
-            gratitudeQ.text = journalEntry.gratitude_question
-            gratitudeA.text = journalEntry.gratitude_answer
-            focusQ.text = journalEntry.focusQ
-            focusA.text = journalEntry.focusA
+
+            //If gratitude question does not exist, make this not visible in the dashboard page
+            if(journalEntry.gratitude_question == "" || journalEntry.gratitude_question.isEmpty()) {
+                gratitudeView.visibility = View.GONE
+//                gratitudeQ.visibility = View.GONE
+//                gratitudeA.visibility = View.GONE
+            } else {
+                gratitudeQ.text = journalEntry.gratitude_question
+                gratitudeA.text = journalEntry.gratitude_answer
+            }
+
+            //If focus question does not exist, make this not visible in the dashboard page
+            if(journalEntry.focusQ == "" || journalEntry.focusQ.isEmpty()) {
+                focusView.visibility = View.GONE
+            } else {
+                focusQ.text = journalEntry.focusQ
+                focusA.text = journalEntry.focusA
+            }
+
             journalText.text = journalEntry.journal_entry
             when (journalEntry.mood) {
-                "Happy" -> moodColor.setBackgroundColor(ContextCompat.getColor(context, R.color.happy))
-                "Calm" -> moodColor.setBackgroundColor(ContextCompat.getColor(context, R.color.calm))
-                "Powerful" -> moodColor.setBackgroundColor(ContextCompat.getColor(context, R.color.powerful))
-                "Sad" -> moodColor.setBackgroundColor(ContextCompat.getColor(context, R.color.sad))
-                "Angry" -> moodColor.setBackgroundColor(ContextCompat.getColor(context, R.color.angry))
-                "Anxious" -> moodColor.setBackgroundColor(ContextCompat.getColor(context, R.color.anxious))
+                "Happy" -> moodColour.setBackgroundColor(ContextCompat.getColor(context, R.color.happy))
+                "Calm" -> moodColour.setBackgroundColor(ContextCompat.getColor(context, R.color.calm))
+                "Powerful" -> moodColour.setBackgroundColor(ContextCompat.getColor(context, R.color.powerful))
+                "Sad" -> moodColour.setBackgroundColor(ContextCompat.getColor(context, R.color.sad))
+                "Angry" -> moodColour.setBackgroundColor(ContextCompat.getColor(context, R.color.angry))
+                "Anxious" -> moodColour.setBackgroundColor(ContextCompat.getColor(context, R.color.anxious))
             }
         }
     }

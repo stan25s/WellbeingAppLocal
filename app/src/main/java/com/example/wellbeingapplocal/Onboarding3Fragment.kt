@@ -3,21 +3,13 @@ package com.example.wellbeingapplocal
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.graphics.Bitmap
-import android.graphics.Paint
-import android.graphics.Picture
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.PopupWindow
 import android.widget.Toast
-import androidx.appcompat.widget.PopupMenu
 import androidx.preference.PreferenceManager
-import androidx.viewpager2.widget.ViewPager2
-import com.example.wellbeingapplocal.databinding.FragmentOnboarding1Binding
 import com.example.wellbeingapplocal.databinding.FragmentOnboarding3Binding
 
 
@@ -51,17 +43,21 @@ class Onboarding3Fragment : Fragment() {
     private fun setupData() {
         binding.txtMain.text = getString(R.string.third_fragment)
         binding.imgMain.setImageResource(R.mipmap.avatar01_round)
-        binding.button.setOnClickListener {
+        binding.helpButton.setOnClickListener {
             if (!binding.editTextName.text.isNullOrEmpty() && binding.editTextName.text.length >= 2) {
                 //Toast.makeText(it.context, "Submitted!", Toast.LENGTH_SHORT).show()
-                val intent = Intent(it.context, MainActivity::class.java)
+                val intent = Intent(context, MainActivity::class.java)
 
                 //Get user pref name from text box
                 val prefName = binding.editTextName.text.toString()
 
                 //Save to shared preferences
-                val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-                val editor: SharedPreferences.Editor = sharedPreferences.edit()
+                val sharedPreferences: SharedPreferences? = context?.let { it1 ->
+                    PreferenceManager.getDefaultSharedPreferences(
+                        it1
+                    )
+                }
+                val editor: SharedPreferences.Editor = sharedPreferences!!.edit()
 
                 //Create new userID
                 val randomString = (1..8)
@@ -75,11 +71,11 @@ class Onboarding3Fragment : Fragment() {
 
                 //Start Main Activity, and pass user info as intent
                 startActivity(intent)
-                Toast.makeText(it.context, "Success!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Success!", Toast.LENGTH_SHORT).show()
 
                 activity?.finish()
             } else {
-                Toast.makeText(it.context, "Please Enter your Name Before Continuing", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Please Enter your Name Before Continuing", Toast.LENGTH_SHORT).show()
             }
         }
     }

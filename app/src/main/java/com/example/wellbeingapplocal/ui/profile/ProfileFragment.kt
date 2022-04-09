@@ -1,5 +1,6 @@
 package com.example.wellbeingapplocal.ui.profile
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -28,10 +29,23 @@ class ProfileFragment : Fragment() {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textNotifications
-        notificationsViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+//        val textView: TextView = binding.textNotifications
+//        notificationsViewModel.text.observe(viewLifecycleOwner) {
+//            textView.text = it
+//        }
+
+        binding.prefTitle.setOnClickListener {
+            //Start Preference Activity
+            val intent = Intent(context, SettingsActivity::class.java)
+            activity?.startActivity(intent)
         }
+
+        binding.helpButton.setOnClickListener {
+            //Start Help Activity
+            val intent = Intent(context, HelpActivity::class.java)
+            activity?.startActivity(intent)
+        }
+
         return root
     }
 

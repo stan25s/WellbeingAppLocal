@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,6 +29,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
+import com.example.wellbeingapplocal.ui.dashboard.DashboardViewModel
 
 
 class HomeFragment : Fragment() {
@@ -38,6 +40,7 @@ class HomeFragment : Fragment() {
 
     private lateinit var sessionId: String
     private lateinit var focus: String
+    private lateinit var dashboardViewModel : ViewModel
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -71,6 +74,7 @@ class HomeFragment : Fragment() {
 //        val homeViewModel =
 //            ViewModelProvider(this).get(HomeViewModel::class.java)
         viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+        dashboardViewModel = DashboardViewModel()
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -277,31 +281,33 @@ class HomeFragment : Fragment() {
 
                     //Check for code at end of message
                     if (tempString.last() == '}') {
-                        val messageCode = tempString.split("}")
+                        val messageCode = tempString.split("{")
                         when (messageCode[1]) {
-                            "grat" -> {
+                            "grat}" -> {
                                 //Save gratitude question and set flag to record answer when user
                                 //sends message
                                 gratQ = messageCode[0]
+                                viewModel.addAnswerToMap("gratQ", gratQ)
                                 gratReceived = true
                             }
-                            "fqq" -> {
+                            "fqq}" -> {
                                 fqq = messageCode[0]
                                 viewModel.addAnswerToMap("fqQ", fqq)
                             }
-                            "jou" -> jouReceived = true
-                            "sjou" -> {
+                            "jou}" -> jouReceived = true
+                            "sjou}" -> {
                                 jouReceived = false
                                 viewModel.clearJournal()
                             }
-                            "sgrat" -> {
+                            "sgrat}" -> {
                                 gratReceived = false
                                 viewModel.removeAnswerFromMap("gratA")
                                 viewModel.removeAnswerFromMap("gratQ")
                             }
-                            "end" -> {
+                            "end}" -> {
                                 context?.let { viewModel.saveAnswersToFile(it) }
                                 context?.let { viewModel.saveJournalToFile(it) }
+                                //dashboardViewModel.readFilesAndUpdate()
                                 //Sets a new Session Variable
                                 (activity as MainActivity).newSession()
                                 //viewModel.clearAnswerMap()
@@ -314,18 +320,13 @@ class HomeFragment : Fragment() {
                         mq1 = jsonObject["mq1"] as String
                         viewModel.addAnswerToMap("mq1", mq1)
                     }
-                    if (jsonObject["mq2"] as String != "") {
-                        mq2 = jsonObject["mq2"] as String
+                    if (jsonObject["mq2"].toString() != "") {
+                        mq2 = jsonObject["mq2"].toString()
                         viewModel.addAnswerToMap("mq2", mq2)
                     }
                     if (jsonObject["fq1"] as String != "") {
                         fqa = jsonObject["fq1"] as String
                         viewModel.addAnswerToMap("fq1", fqa)
-                    }
-                    if (jsonObject["gratQ"] as String != "") {
-                        gratQ = jsonObject["gratQ"] as String
-                        viewModel.addAnswerToMap("gratQ", gratQ)
-                        //Save answers to file
                         context?.let { viewModel.saveAnswersToFile(it) }
                     }
 

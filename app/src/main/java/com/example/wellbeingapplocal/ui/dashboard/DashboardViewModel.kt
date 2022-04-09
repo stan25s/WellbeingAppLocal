@@ -5,22 +5,29 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.wellbeingapplocal.JournalEntry
+import com.example.wellbeingapplocal.MoodColour
 import java.io.BufferedReader
 import java.io.File
 import java.io.FileInputStream
 import java.io.InputStreamReader
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+import java.util.*
+import kotlin.collections.ArrayList
 
 class DashboardViewModel : ViewModel() {
-
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is dashboard Fragment"
-    }
-    val text: LiveData<String> = _text
 
     private val _journalEntries = MutableLiveData<ArrayList<JournalEntry>>().apply {
         value = ArrayList()
     }
     val journalEntries: LiveData<ArrayList<JournalEntry>> = _journalEntries
+
+    private val _moodValues = MutableLiveData<ArrayList<MoodColour>>().apply {
+        value = ArrayList()
+    }
+    val moodValues: LiveData<ArrayList<MoodColour>> = _moodValues
 
     fun getJournalIDs(): ArrayList<String> {
         var idArrayList : ArrayList<String> = ArrayList()
@@ -99,16 +106,29 @@ class DashboardViewModel : ViewModel() {
             var focusA = ""
 
             var stringArray = inputString.split("{{")
-            for (i in stringArray) {
-                when (i) {
-                    "mq1" -> mood = stringArray[stringArray.indexOf(i) + 1]
-                    "mq2" -> day_rating = stringArray[stringArray.indexOf(i) + 1]
-                    "fqQ" -> focusQ = stringArray[stringArray.indexOf(i) + 1]
-                    "fqA" -> focusA = stringArray[stringArray.indexOf(i) + 1]
-                    "gratQ" -> gratQ = stringArray[stringArray.indexOf(i) + 1]
-                    "gratA" -> gratA = stringArray[stringArray.indexOf(i) + 1]
+            for (j in stringArray) {
+                when (j) {
+                    "mq1" -> mood = stringArray[stringArray.indexOf(j) + 1]
+                    "mq2" -> day_rating = stringArray[stringArray.indexOf(j) + 1]
+                    "fqQ" -> focusQ = stringArray[stringArray.indexOf(j) + 1]
+                    "fqA" -> focusA = stringArray[stringArray.indexOf(j) + 1]
+                    "gratQ" -> gratQ = stringArray[stringArray.indexOf(j) + 1]
+                    "gratA" -> gratA = stringArray[stringArray.indexOf(j) + 1]
                 }
             }
+            //Check if mood value populated, and if so add to moodValues value
+            if (mood != "" && mood.isNotEmpty()) {
+                val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.UK)
+                val date = LocalDate.parse(i, formatter)
+                val dateDate = Date.from(date.atStartOfDay()
+                    .atZone(ZoneId.systemDefault())
+                    .toInstant())
+                val simpleDateFormat = SimpleDateFormat("EEE", Locale.UK).format(dateDate)
+
+                val dayCode = simpleDateFormat[0]
+                _moodValues.value?.add(MoodColour(mood, dayCode.toString(), date))
+            }
+
             if (journalDates.contains(i)) {
                 //A journal entry has already been created with this date, so we need to add the
                 //Check-in data to the existing entry

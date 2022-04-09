@@ -11,7 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -59,6 +60,49 @@
             app:layout_constraintBottom_toBottomOf="@id/focusTitle"
             android:textSize="14sp"
             android:textColor="@color/border1" />
+
+        <View
+            android:id="@+id/barrier"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="15dp"
+            android:background="@color/border1"
+            app:layout_constraintTop_toBottomOf="@id/focusTitle"/>
+
+        <TextView
+            android:id="@+id/prefTitle"
+            android:layout_marginTop="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/barrier"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="Preferences >"
+            android:textColor="@color/border2"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/helpButton"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/prefTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="Help >"
+            android:textColor="@color/border2"
+            android:textStyle="bold"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="Send Feedback"
+        android:layout_marginBottom="50dp"
+        android:textColor="@color/accent_dark"
+        android:textStyle="bold"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
