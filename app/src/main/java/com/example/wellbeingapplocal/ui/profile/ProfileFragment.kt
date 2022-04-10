@@ -8,7 +8,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.preference.PreferenceManager
+import com.example.wellbeingapplocal.FeedbackActivity
 import com.example.wellbeingapplocal.databinding.FragmentProfileBinding
+import kotlinx.android.synthetic.main.fragment_profile.*
 
 class ProfileFragment : Fragment() {
 
@@ -33,6 +36,23 @@ class ProfileFragment : Fragment() {
 //        notificationsViewModel.text.observe(viewLifecycleOwner) {
 //            textView.text = it
 //        }
+        val sharedPreferences = context?.let { PreferenceManager.getDefaultSharedPreferences(it) }
+
+        binding.nameValue.text = sharedPreferences?.getString("prefName", "Name Not Found")
+
+        if (sharedPreferences?.getStringSet("focuses", null).isNullOrEmpty()) {
+            binding.focusValue.text = "No Focuses Set"
+        } else {
+            val focusValues = StringBuilder()
+            for (i in sharedPreferences?.getStringSet("focuses", setOf())!!) {
+                focusValues.append(i)
+                focusValues.append(", ")
+            }
+            val string = focusValues.removeRange(focusValues.length - 2, focusValues.length - 1)
+
+            binding.focusValue.text = string
+        }
+
 
         binding.prefTitle.setOnClickListener {
             //Start Preference Activity
@@ -43,6 +63,11 @@ class ProfileFragment : Fragment() {
         binding.helpButton.setOnClickListener {
             //Start Help Activity
             val intent = Intent(context, HelpActivity::class.java)
+            activity?.startActivity(intent)
+        }
+
+        binding.feedbackButton.setOnClickListener {
+            val intent = Intent(context, FeedbackActivity::class.java)
             activity?.startActivity(intent)
         }
 

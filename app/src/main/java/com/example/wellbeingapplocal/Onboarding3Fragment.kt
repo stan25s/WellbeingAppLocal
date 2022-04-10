@@ -50,6 +50,7 @@ class Onboarding3Fragment : Fragment() {
 
                 //Get user pref name from text box
                 val prefName = binding.editTextName.text.toString()
+                val prefNameWithCapitals = prefName[0].uppercaseChar() + prefName.substring(1)
 
                 //Save to shared preferences
                 val sharedPreferences: SharedPreferences? = context?.let { it1 ->
@@ -57,17 +58,16 @@ class Onboarding3Fragment : Fragment() {
                         it1
                     )
                 }
-                val editor: SharedPreferences.Editor = sharedPreferences!!.edit()
+                val editor = sharedPreferences?.edit()
 
                 //Create new userID
                 val randomString = (1..8)
                     .map { charPool.random() }
                     .joinToString("")
 
-                editor.putString("prefName", prefName)
-                editor.putStringSet("focuses", (activity as OnBoarding).selectedFocus.toSet())
-                editor.putString("userID", randomString)
-                editor.apply()
+                editor?.putString("prefName", prefNameWithCapitals)?.apply()
+                editor?.putStringSet("focuses", (activity as OnBoarding).selectedFocus.toSet())?.apply()
+                editor?.putString("userID", randomString)?.apply()
 
                 //Start Main Activity, and pass user info as intent
                 startActivity(intent)

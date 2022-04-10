@@ -24,8 +24,8 @@
             android:text="Your Name:"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:textSize="14sp"
             android:textColor="@color/border2"
+            android:textSize="16sp"
             android:textStyle="bold"/>
 
         <TextView
@@ -36,7 +36,7 @@
             android:layout_marginStart="10dp"
             app:layout_constraintStart_toEndOf="@id/nameTitle"
             app:layout_constraintBottom_toBottomOf="@id/nameTitle"
-            android:textSize="14sp"
+            android:textSize="16sp"
             android:textColor="@color/border1" />
 
         <TextView
@@ -48,6 +48,7 @@
             app:layout_constraintStart_toStartOf="parent"
             android:text="Focuses:"
             android:textColor="@color/border2"
+            android:textSize="16sp"
             android:textStyle="bold"/>
 
         <TextView
@@ -58,7 +59,7 @@
             android:layout_marginStart="10dp"
             app:layout_constraintStart_toEndOf="@id/focusTitle"
             app:layout_constraintBottom_toBottomOf="@id/focusTitle"
-            android:textSize="14sp"
+            android:textSize="16sp"
             android:textColor="@color/border1" />
 
         <View
@@ -78,6 +79,7 @@
             app:layout_constraintStart_toStartOf="parent"
             android:text="Preferences >"
             android:textColor="@color/border2"
+            android:textSize="16sp"
             android:textStyle="bold"/>
 
         <TextView
@@ -89,11 +91,13 @@
             app:layout_constraintStart_toStartOf="parent"
             android:text="Help >"
             android:textColor="@color/border2"
+            android:textSize="16sp"
             android:textStyle="bold"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     <TextView
+        android:id="@+id/feedbackButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -101,6 +105,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:text="Send Feedback"
         android:layout_marginBottom="50dp"
+        android:textSize="16sp"
         android:textColor="@color/accent_dark"
         android:textStyle="bold"/>
 

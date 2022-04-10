@@ -1,6 +1,9 @@
 package com.example.wellbeingapplocal
 
+import android.app.AlarmManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -11,6 +14,7 @@ import androidx.preference.PreferenceManager
 import com.allyants.notifyme.NotifyMe
 import com.example.wellbeingapplocal.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import java.time.Instant
 import java.util.*
 
 
@@ -20,11 +24,15 @@ class MainActivity : AppCompatActivity() {
 
     private val charPool : List<Char> = ('a'..'z') + ('A'..'Z') + ('0'..'9')
 
-    //private var sharedPrefsFile = "sharedprefs"
+    private lateinit var alarmManager: AlarmManager
+    private val alarmPendingIntent by lazy {
+        val intent = Intent(applicationContext, AlarmReceiver::class.java)
+        PendingIntent.getBroadcast(applicationContext, 0, intent, 0)
+    }
+    private var hourToShowReminder: Int = 20
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//TODO: If Session Variable in sharedPrefs is not set; instantiate with unique value for user.
 
         newSession()
 
@@ -35,42 +43,69 @@ class MainActivity : AppCompatActivity() {
 
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
 
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.navigation_dashboard, R.id.navigation_home, R.id.navigation_notifications
-            )
-        )
         navView.setupWithNavController(navController)
 
-        //Set up NotifyMe builder for notifications
-        val notifyMe = NotifyMe.Builder(applicationContext)
-        val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(applicationContext)
-        //Get user preference on reminders (true by default)
-        val remindersEnabled = sharedPreferences.getBoolean("reminders-enabled", true)
-        val reminderFrequency = sharedPreferences.getString("reminder-frequency", "daily")
-
-        TODO("Set up builder NotifyMe builder with values from shared prefs")
-
-//        notifyMe.title(String title);
-//        notifyMe.content(String content);
-//        notifyMe.color(Int red,Int green,Int blue,Int alpha);//Color of notification header
-//        notifyMe.led_color(Int red,Int green,Int blue,Int alpha);//Color of LED when notification pops up
-//        notifyMe.time(Calendar time);//The time to popup notification
-//        notifyMe.delay(Int delay);//Delay in ms
-//        notifyMe.large_icon(Int resource);//Icon resource by ID
-//        notifyMe.rrule("FREQ=MINUTELY;INTERVAL=5;COUNT=2")//RRULE for frequency of notification
-//        notifyMe.addAction(Intent intent,String text); //The action will call the intent when pressed
-
-
+        //hide actionBar
         supportActionBar?.hide()
 
+
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(applicationContext)
+
+        //Get alarm manager, and schedule initial
+        alarmManager = applicationContext.getSystemService(ALARM_SERVICE) as AlarmManager
+        hourToShowReminder = sharedPreferences.getString("reminder-time", "20")?.toInt()!!
+        schedulePushNotifications()
+
+        sharedPreferences.registerOnSharedPreferenceChangeListener { sharedPreferences, key ->
+            if (key == "reminder-time") {
+                //If reminder time has been changed, get the new value and schedule a new alarm for reminder notifications
+
+                hourToShowReminder = sharedPreferences.getString(key, "20")?.toInt()!!
+                //alarmManager.cancel(alarmPendingIntent)
+                schedulePushNotifications()
+            } else if (key == "reminders-enabled") {
+                if (sharedPreferences.getBoolean("reminders-enabled", false)) {
+                    schedulePushNotifications()
+                }
+                //alarmManager.cancel(alarmPendingIntent)
+            } else if (key == "reminder-frequency") {
+                schedulePushNotifications()
+            }
+        }
+    }
+
+    fun schedulePushNotifications() {
+        val calendar = GregorianCalendar.getInstance().apply {
+            if (get(Calendar.HOUR_OF_DAY) >= hourToShowReminder) {
+                add(Calendar.DAY_OF_MONTH, 1)
+            }
+
+            set(Calendar.HOUR_OF_DAY, hourToShowReminder)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }
+
+        var interval: Long = AlarmManager.INTERVAL_DAY
+        val frequency = PreferenceManager.getDefaultSharedPreferences(applicationContext)
+            .getString("reminder-frequency", "daily")
+
+        when (frequency) {
+            "daily" -> interval = AlarmManager.INTERVAL_DAY
+            "2_daily" -> interval = AlarmManager.INTERVAL_DAY * 2
+        }
+
+        alarmManager.setRepeating(
+            AlarmManager.RTC_WAKEUP,
+            calendar.timeInMillis,
+            AlarmManager.INTERVAL_DAY * 2,
+            alarmPendingIntent
+        )
     }
 
     override fun onStop() {
         super.onStop()
-        clearSession()
+        //clearSession()
         //Use this to clear session variable
         //TODO: Delete Session Variable from sharedPrefs
     }
@@ -83,13 +118,13 @@ class MainActivity : AppCompatActivity() {
         editor.apply()
     }
 
-    public fun newSession() {
+    fun newSession() {
         val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(applicationContext)
 
         //Get User ID from sharedPrefs + append _ and current time to create sessionID
         val userID = sharedPreferences.getString("userID", "");
         val time = Calendar.getInstance().timeInMillis
-        var sessionId: String
+        val sessionId: String
         if(!userID.isNullOrEmpty()) {
             sessionId = userID + "_" + time.toString()
         } else {

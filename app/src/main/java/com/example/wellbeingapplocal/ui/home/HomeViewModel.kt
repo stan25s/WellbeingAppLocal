@@ -45,7 +45,7 @@ class HomeViewModel : ViewModel() {
 
     //Clear all messages
     fun clearMessages() {
-        _messages.value = ArrayList()
+        _messages.value?.clear()
     }
 
     //Add value to checkinData map
@@ -85,7 +85,7 @@ class HomeViewModel : ViewModel() {
     }
 
     fun clearJournal() {
-        _journal.value = ""
+        _journal.postValue("")
     }
 
     fun saveAnswersToFile(context: Context) {

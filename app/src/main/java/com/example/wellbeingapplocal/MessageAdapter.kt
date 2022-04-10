@@ -18,9 +18,32 @@ private const val VIEW_TYPE_BOT_MESSAGE = 3
 class MessageAdapter (val context: Context) : RecyclerView.Adapter<MessageViewHolder>() {
     private val messages: ArrayList<Message> = ArrayList()
 
+    private var isFirstMessage: Boolean = false
+
     fun addMessage(message: Message) {
-        messages.add(message)
+        if (messages.isNotEmpty()) {
+            if ((message.message == messages.last().message || messages.last().message == "@bot" + message.message)
+                && message.session == messages.last().session) {
+                //If the message given to add is the same as the last message already added, skip this
+                println("Message Already Added")
+            } else {
+                messages.add(message)
+            }
+        } else {
+            isFirstMessage = true
+            messages.add(message)
+        }
         notifyDataSetChanged()
+
+    }
+
+    fun getLastUser(): String {
+        if(messages.isEmpty()) {
+            return ""
+        } else {
+            return messages.last().user
+        }
+
     }
 
     fun updateMessages(newMessages: ArrayList<Message>) {
@@ -82,10 +105,20 @@ class MessageAdapter (val context: Context) : RecyclerView.Adapter<MessageViewHo
 
     inner class MyMessageViewHolder (view: View) : MessageViewHolder(view) {
         private var messageText: TextView = view.txtMyMessage
+        private var messageView: View = view
         //private var timeText: TextView = view.txtMyMessageTime
 
         override fun bind(message: Message) {
-            messageText.text = message.message
+            if(message.message.startsWith("@bot")) {
+                messageText.text = message.message.replace("@bot", "")
+            } else {
+                messageText.text = message.message
+            }
+//            if(isFirstMessage || message.message == "Hi" || message.message == "hi") {
+//                messageView.visibility = View.GONE
+//                isFirstMessage = false
+//            }
+            //messageText.text = message.message
             //timeText.text = DateUtils.formatDateTime(context, message.time, DateUtils.FORMAT_SHOW_TIME)
         }
     }

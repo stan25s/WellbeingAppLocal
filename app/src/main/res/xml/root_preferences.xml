@@ -16,22 +16,36 @@
             app:title="@string/notification_title"
             app:useSimpleSummaryProvider="true" />
 
-    </PreferenceCategory>
-
-    <PreferenceCategory app:title="@string/focus_header">
-
-<!--        <SwitchPreferenceCompat-->
-<!--            app:key="sync"-->
-<!--            app:title="@string/sync_title" />-->
-
-<!--        <SwitchPreferenceCompat-->
-<!--            app:dependency="sync"-->
-<!--            app:key="attachment"-->
-<!--            app:summaryOff="@string/attachment_summary_off"-->
-<!--            app:summaryOn="@string/attachment_summary_on"-->
-<!--            app:title="@string/attachment_title" />-->
+        <ListPreference
+            android:defaultValue="20"
+            android:entries="@array/time_entries"
+            android:entryValues="@array/time_values"
+            android:key="reminder-time"
+            android:title="@string/notification_time"
+            app:useSimpleSummaryProvider="true"/>
 
 
     </PreferenceCategory>
+
+<!--    <PreferenceCategory app:title="@string/focus_header">-->
+
+
+<!--        <CheckBoxPreference-->
+<!--            android:defaultValue="false"-->
+<!--            android:key="anxiety_selected"-->
+<!--            android:title="Anxiety" />-->
+<!--        <CheckBoxPreference-->
+<!--            android:defaultValue="false"-->
+<!--            android:key="motivation_selected"-->
+<!--            android:title="Motivation" />-->
+<!--        <CheckBoxPreference-->
+<!--            android:defaultValue="false"-->
+<!--            android:key="depression_selected"-->
+<!--            android:title="Depression" />-->
+<!--        <CheckBoxPreference-->
+<!--            android:defaultValue="false"-->
+<!--            android:key="energy_selected"-->
+<!--            android:title="Energy" />-->
+<!--    </PreferenceCategory>-->
 
 </PreferenceScreen>

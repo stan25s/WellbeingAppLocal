@@ -3,6 +3,7 @@
     package="com.example.wellbeingapplocal">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY"/>
 
     <application
         android:allowBackup="true"
@@ -11,7 +12,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.WellbeingAppLocal"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        android:configChanges="orientation|screenSize">
+        <activity
+            android:name=".FeedbackActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.profile.HelpActivity"
             android:exported="false" />
@@ -32,6 +37,13 @@
             android:name=".MainActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustPan" />
+        <receiver android:name="com.example.wellbeingapplocal.AlarmReceiver" android:enabled="true"/>
+        <receiver android:name="com.example.wellbeingapplocal.BootReceiver" android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

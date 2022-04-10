@@ -66,6 +66,9 @@ class HomeFragment : Fragment() {
 
     private var gratReceived : Boolean = false
 
+    //Value stored here to hold whether loading view should be shown
+    private var botTyping : Boolean = false
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -146,20 +149,53 @@ class HomeFragment : Fragment() {
         }
 
         //Only use this for testing!! Then delete
-        //val sharedPrefs : SharedPreferences = getp
-        //user = "testUser"
         val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(
             requireContext()
         )
-        //val sharedPreferences: SharedPreferences = view.context
-            //.getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
+
         user = sharedPreferences.getString("prefName", null).toString()
 
         if (user.isEmpty()) {
             user = "nullUser"
         }
 
+        //If there are no messages sent yet, send a "hi" message to trigger default welcome intent
+        if (adapter.itemCount == 0) {
+            val message = Message(
+                user,
+                "@botHi",
+                Calendar.getInstance().timeInMillis,
+                sessionId,
+                focus,
+                //Add params jsonObject here
+                mq1,
+                mq2,
+                gratQ,
+                gratA,
+                fqa
+            )
+            val call = ChatService.create().postMessage(message)
+            adapter.addMessage(message)
+            resetInput()
+            call.enqueue(object : Callback<Void> {
 
+                override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                    //resetInput()
+                    if (!response.isSuccessful) {
+                        Log.e(TAG, response.code().toString());
+                        Toast.makeText(context,"Response was not successful", Toast.LENGTH_SHORT).show()
+                        binding.botTypingDots.visibility = View.GONE
+                    }
+                }
+
+                override fun onFailure(call: Call<Void>, t: Throwable) {
+                    //resetInput()
+                    Log.e(TAG, t.toString());
+                    Toast.makeText(context,"Error when calling the service", Toast.LENGTH_SHORT).show()
+                    binding.botTypingDots.visibility = View.GONE
+                }
+            })
+        }
         btnSend.setOnClickListener {
             if(txtMessage.text.isNotEmpty()) {
                 var addBotText = txtMessage.text.toString()
@@ -202,6 +238,12 @@ class HomeFragment : Fragment() {
                 println("jou: $jou")
                 println("gratQ: $gratQ")
                 println("gratA: $gratA")
+                println("Session: " + sessionId)
+
+                //Add user's message to messageAdapter
+                adapter.addMessage(message)
+                binding.botTypingDots.visibility = View.VISIBLE
+
                 val call = ChatService.create().postMessage(message)
                 resetInput()
                 call.enqueue(object : Callback<Void> {
@@ -211,6 +253,7 @@ class HomeFragment : Fragment() {
                         if (!response.isSuccessful) {
                             Log.e(TAG, response.code().toString());
                             Toast.makeText(context,"Response was not successful", Toast.LENGTH_SHORT).show()
+                            binding.botTypingDots.visibility = View.GONE
                         }
                     }
 
@@ -218,12 +261,19 @@ class HomeFragment : Fragment() {
                         //resetInput()
                         Log.e(TAG, t.toString());
                         Toast.makeText(context,"Error when calling the service", Toast.LENGTH_SHORT).show()
+                        binding.botTypingDots.visibility = View.GONE
                     }
                 })
             } else {
                 Toast.makeText(context,"Message should not be empty", Toast.LENGTH_SHORT).show()
             }
         }
+        if (adapter.getLastUser() != "bot") {
+            binding.botTypingDots.visibility = View.VISIBLE
+        } else {
+            binding.botTypingDots.visibility = View.GONE
+        }
+
         //val viewModel: HomeViewModel by viewModels()
         viewModel.messages.observe(viewLifecycleOwner, androidx.lifecycle.Observer { messages ->
             for(i in messages) {
@@ -310,8 +360,10 @@ class HomeFragment : Fragment() {
                                 //dashboardViewModel.readFilesAndUpdate()
                                 //Sets a new Session Variable
                                 (activity as MainActivity).newSession()
-                                //viewModel.clearAnswerMap()
-                                //viewModel.clearJournal()
+
+                                viewModel.clearAnswerMap()
+                                viewModel.clearJournal()
+                                clearAnswers()
                             }
                         }
                         tempString = messageCode[0]
@@ -348,6 +400,9 @@ class HomeFragment : Fragment() {
                 activity?.runOnUiThread {
                     for(i in messages) {
                         adapter.addMessage(i)
+                        if (i.user == "bot") {
+                            binding.botTypingDots.visibility = View.GONE
+                        }
                         viewModel.addMessage(i)
                     }
 
@@ -366,5 +421,17 @@ class HomeFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    fun clearAnswers() {
+        mq1  = ""
+        mq2  = ""
+        fqq = ""
+        fqa = ""
+        jou = ""
+        gratQ = ""
+        gratA = ""
+        jouReceived = false
+        gratReceived = false
     }
 }

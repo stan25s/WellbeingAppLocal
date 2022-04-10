@@ -18,6 +18,13 @@
     <!-- Notification Preferences -->
     <string name="reminder_title">Reminders Enabled</string>
     <string name="notification_title">Reminder Frequency</string>
+    <string name="notification_time">Reminder Time</string>
+
+    <!-- Notification Values -->
+    <string name="notification_header_value">Daily Check-in Reminder</string>
+    <string name="notification_content">
+        Looks like it\'s time for your daily check-in! Tap here to open the app and get started.
+    </string>
 
     <!-- Sync Preferences -->
     <string name="sync_title">Sync email periodically</string>
