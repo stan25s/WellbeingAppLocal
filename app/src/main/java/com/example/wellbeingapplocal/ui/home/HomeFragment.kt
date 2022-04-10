@@ -116,13 +116,13 @@ class HomeFragment : Fragment() {
 
         // Instance field for listener
         val listener = OnSharedPreferenceChangeListener { prefs, key ->
-            // Your Implementation
             if (key == "sessionId") {
                 sessionId = prefs.getString(key, "").toString()
             }
         }
-
         prefs.registerOnSharedPreferenceChangeListener(listener)
+        sessionId = prefs.getString("sessionId", "").toString()
+
 
         return root
     }
@@ -401,13 +401,14 @@ class HomeFragment : Fragment() {
                         Message(jsonObject["user"] as String, i,
                             jsonObject["time"] as Long, sessionId, focus, mq1, mq2, gratQ, gratA, fqa))
                 }
-
+                for (i in messages) {
+                    if (i.user == "bot") {
+                        binding.botTypingDots.visibility = View.GONE
+                    }
+                }
                 activity?.runOnUiThread {
                     for(i in messages) {
                         adapter.addMessage(i)
-                        if (i.user == "bot") {
-                            binding.botTypingDots.visibility = View.GONE
-                        }
                         viewModel.addMessage(i)
                     }
 
@@ -415,13 +416,14 @@ class HomeFragment : Fragment() {
                     try {
                         messageList.scrollToPosition(adapter.itemCount - 1);
                     } catch (error: Exception) {
-                        error(error)
+                        println(error.message)
+                        println(error.stackTraceToString())
                     }
 
                 }
-            } catch (e : NullPointerException) {
+            } catch (e : Exception) {
                 println(e.message)
-                println(e.cause)
+                println(e.stackTraceToString())
             }
         }
 

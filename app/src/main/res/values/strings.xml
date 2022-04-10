@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Wellbeing Bot</string>
+    <string name="app_name">Journal Bot</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_profile">Profile</string>
@@ -36,6 +36,37 @@
     <string name="attachment_summary_on">Automatically download attachments for incoming emails
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
-    <!--    Attribution for illustrations-->
-    <!--<a href='https://www.freepik.com/vectors/robot-chatbot'>Robot chatbot vector created by pch.vector - www.freepik.com</a>-->
+
+
+    <!-- Help Page Strings -->
+    <string name="help_title_description">Overview</string>
+    <string name="help_text_description">This app is a journal and a mood tracker. The main interface
+        is the home screen, where you can chat with a bot to record mood data and journal entries.
+        \n\nThe next page is the Dashboard. This page allows you to see your activity on the app,
+        and keep track of your progress over the past few days.
+        \n\nThe last page to mention is the Profile page. This page shows your name and selected
+        focus topics, and links to the help, preferences, and feedback pages. The preferences page
+        allows you to change your notification settings, and feedback page provides a space to report
+        bugs or give feedback about your experience.
+        \n\nPlease note - This app is still in an early development stage, meaning there may be less
+        functionality in this version than there will be in future. You may also notice bugs or parts
+        of the app that aren\'t working as they should. If you are able to report these using the
+        \'Send Feedback\' button found on the profile page, that\'s greatly appreciated. Any and all
+        feedback, feature requests, or bug reports are welcome to help improve the app.
+        \nThanks for your support!</string>
+    <string name="help_title_talking">Talking to Bot</string>
+    <string name="help_text_talking">When you first open the application, Bot will greet you and ask
+        if you\'d like to complete a mood check-in. To start the mood check-in, you can reply saying
+        yes, or say no if you\'d like to leave it for now.
+        \n\nOnce you have started the mood check-in, you can skip any question that you don\'t want
+        to answer by saying anything like "skip" or "I can\'t answer".
+        \n\nIf you have completed your check in for one day, starting another check-in on the same
+        day will overwrite your saved data for that date. Starting another check-in on the next day
+        will be saved separately as a new check-in</string>
+    <string name="help_title_notifications">Reminders</string>
+    <string name="help_text_notifications">When you first start using the application, by default
+        you will receive daily notifications to remind you to complete a check-in. You can
+        disable or enable this feature from the preferences page.
+        \n\nOn the preferences page you will also find settings that will allow you to change how
+        often you are reminded, and what time of day you are reminded.</string>
 </resources>

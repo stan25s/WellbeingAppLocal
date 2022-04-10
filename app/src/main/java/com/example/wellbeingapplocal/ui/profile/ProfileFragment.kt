@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import com.example.wellbeingapplocal.FeedbackActivity
+import com.example.wellbeingapplocal.R
 import com.example.wellbeingapplocal.databinding.FragmentProfileBinding
 import kotlinx.android.synthetic.main.fragment_profile.*
 
@@ -52,6 +53,8 @@ class ProfileFragment : Fragment() {
 
             binding.focusValue.text = string
         }
+
+        binding.imgMain.setImageResource(R.drawable.robot_help_2)
 
 
         binding.prefTitle.setOnClickListener {
