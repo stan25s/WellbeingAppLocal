@@ -42,7 +42,7 @@ class Onboarding3Fragment : Fragment() {
 
     private fun setupData() {
         binding.txtMain.text = getString(R.string.third_fragment)
-        binding.imgMain.setImageResource(R.mipmap.avatar01_round)
+        binding.imgMain.setImageResource(R.drawable.robot_phone)
         binding.helpButton.setOnClickListener {
             if (!binding.editTextName.text.isNullOrEmpty() && binding.editTextName.text.length >= 2) {
                 //Toast.makeText(it.context, "Submitted!", Toast.LENGTH_SHORT).show()

@@ -18,7 +18,6 @@ class OnBoarding : FragmentActivity() {
 
     private val sharedPrefFile = "sharedprefs"
 
-    private val skipOnboardingForTesting = false
     private val debugMode = true
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,12 +1,16 @@
 <resources>
-    <string name="app_name">WellbeingAppLocal</string>
+    <string name="app_name">Wellbeing Bot</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_profile">Profile</string>
     <string name="no_image">No Image</string>
-    <string name="first_fragment">Here\'s the first onboarding page! Welcome to the app!</string>
+    <string name="first_fragment">
+        Hi! I\'m Bot, your new well-being robot!
+        \n\nEach day you can complete a daily check-in, and write in your journal.
+        \n\nIf you\'re having any problems with the app, check out the profile page for help.
+    </string>
     <string name="second_fragment">Let\'s get to know each other! Choose up to 3 items from this list that you\'d like to work on together. (optional)</string>
-    <string name="third_fragment">First name / preferred name</string>
+    <string name="third_fragment">What should I call you?</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_settings">SettingsActivity</string>

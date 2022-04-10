@@ -30,6 +30,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
 import com.example.wellbeingapplocal.ui.dashboard.DashboardViewModel
+import java.lang.Exception
 
 
 class HomeFragment : Fragment() {
@@ -344,6 +345,10 @@ class HomeFragment : Fragment() {
                                 fqq = messageCode[0]
                                 viewModel.addAnswerToMap("fqQ", fqq)
                             }
+                            "sfqq}" -> {
+                                fqq = ""
+                                viewModel.addAnswerToMap("fqQ", fqq)
+                            }
                             "jou}" -> jouReceived = true
                             "sjou}" -> {
                                 jouReceived = false
@@ -407,7 +412,12 @@ class HomeFragment : Fragment() {
                     }
 
                     // scroll the RecyclerView to the last added element
-                    messageList.scrollToPosition(adapter.itemCount - 1);
+                    try {
+                        messageList.scrollToPosition(adapter.itemCount - 1);
+                    } catch (error: Exception) {
+                        error(error)
+                    }
+
                 }
             } catch (e : NullPointerException) {
                 println(e.message)
