@@ -125,7 +125,7 @@ class DashboardViewModel : ViewModel() {
                     .toInstant())
                 val simpleDateFormat = SimpleDateFormat("EEE", Locale.UK).format(dateDate)
 
-                val dayCode = simpleDateFormat[0]
+                val dayCode = simpleDateFormat
                 _moodValues.value?.add(MoodColour(mood, dayCode.toString(), date))
             }
 
@@ -135,6 +135,7 @@ class DashboardViewModel : ViewModel() {
                 fullEntries.find{it.date == i}?.mood = mood
                 fullEntries.find{it.date == i}?.day_rating = day_rating
                 fullEntries.find{it.date == i}?.focusQ = focusQ
+                fullEntries.find{it.date == i}?.focusA = focusA
                 fullEntries.find{it.date == i}?.gratitude_question = gratQ
                 fullEntries.find{it.date == i}?.gratitude_answer = gratA
             } else {

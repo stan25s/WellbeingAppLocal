@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var alarmManager: AlarmManager
     private val alarmPendingIntent by lazy {
         val intent = Intent(applicationContext, AlarmReceiver::class.java)
-        PendingIntent.getBroadcast(applicationContext, 0, intent, 0)
+        PendingIntent.getBroadcast(applicationContext, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
     }
     private var hourToShowReminder: Int = 20
 

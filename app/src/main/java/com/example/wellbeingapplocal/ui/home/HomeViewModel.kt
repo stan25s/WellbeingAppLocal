@@ -15,7 +15,52 @@ import kotlin.text.StringBuilder
 
 class HomeViewModel : ViewModel() {
 
-    //override fun
+    //Use this pending message to workaround message failure bug that occurs when closing tab during
+    // message sending.
+    //Update this when sending a message and then if interrupted, set flag.
+
+    //HomeFragment is re-opened, check if interrupted flag is set, and if so retrieve the pending
+    //message and re-send.
+    private val _pendingMessage = MutableLiveData<Message>().apply {
+        value = null
+    }
+    val pendingMessage: LiveData<Message> = _pendingMessage
+
+    private val _pendingMessageInterrupted = MutableLiveData<Boolean>().apply {
+        value = false
+    }
+    val pendingMessageInterrupted: LiveData<Boolean> = _pendingMessageInterrupted
+
+    //pendingMessage Functions
+    fun newPendingMessage(message: Message) {
+        _pendingMessage.postValue(message)
+        _pendingMessageInterrupted.postValue(false)
+    }
+
+    fun setInterruptedFlag() {
+        _pendingMessageInterrupted.postValue(true)
+    }
+    fun clearInterruptedFlag() {
+        _pendingMessageInterrupted.postValue(false)
+    }
+
+    private val _lastSavedSessionAnswers = MutableLiveData<String>().apply {
+        value = ""
+    }
+    val lastSavedSessionAnswers: LiveData<String> = _lastSavedSessionAnswers
+
+    private val _lastSavedSessionJournal = MutableLiveData<String>().apply {
+        value = ""
+    }
+    val lastSavedSessionJournal: LiveData<String> = _lastSavedSessionJournal
+
+    fun updateLastSavedSessionAnswers(session: String) {
+        _lastSavedSessionAnswers.postValue(session)
+    }
+
+    fun updateLastSavedSessionJournal(session: String) {
+        _lastSavedSessionJournal.postValue(session)
+    }
 
     private val _text = MutableLiveData<String>().apply {
         value = "This is home Fragment"
@@ -91,7 +136,9 @@ class HomeViewModel : ViewModel() {
     fun saveAnswersToFile(context: Context) {
         //generate string from map
         val sb : StringBuilder = StringBuilder()
+        println("SAVING ANSWERS TO FILE:")
         for(i in _checkinData.value?.keys!!) {
+            println("$i : " + _checkinData.value!![i])
             sb.append("{{")
             sb.append(i)
             sb.append("{{")

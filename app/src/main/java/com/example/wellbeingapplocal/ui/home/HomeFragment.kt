@@ -149,7 +149,6 @@ class HomeFragment : Fragment() {
             viewModel.clearAnswerMap()
         }
 
-        //Only use this for testing!! Then delete
         val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(
             requireContext()
         )
@@ -159,6 +158,33 @@ class HomeFragment : Fragment() {
         if (user.isEmpty()) {
             user = "nullUser"
         }
+
+        //If PendingMessage is not null, and interrupted flag is true, we must retry sending that message
+        if (viewModel.pendingMessage.value != null && viewModel.pendingMessageInterrupted.value == true) {
+            viewModel.clearInterruptedFlag()
+            val call = ChatService.create().postMessage(viewModel.pendingMessage.value!!)
+            adapter.addMessage(viewModel.pendingMessage.value!!)
+            binding.botTypingDots.visibility = View.VISIBLE
+            call.enqueue(object : Callback<Void> {
+
+                override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                    //resetInput()
+                    if (!response.isSuccessful) {
+                        Log.e(TAG, response.code().toString());
+                        Toast.makeText(context,"Response was not successful", Toast.LENGTH_SHORT).show()
+                        binding.botTypingDots.visibility = View.GONE
+                    }
+                }
+
+                override fun onFailure(call: Call<Void>, t: Throwable) {
+                    //resetInput()
+                    Log.e(TAG, t.toString());
+                    Toast.makeText(context,"Error when calling the service", Toast.LENGTH_SHORT).show()
+                    binding.botTypingDots.visibility = View.GONE
+                }
+            })
+        }
+
 
         //If there are no messages sent yet, send a "hi" message to trigger default welcome intent
         if (adapter.itemCount == 0) {
@@ -177,6 +203,8 @@ class HomeFragment : Fragment() {
             )
             val call = ChatService.create().postMessage(message)
             adapter.addMessage(message)
+            viewModel.newPendingMessage(message)
+            viewModel.clearInterruptedFlag()
             resetInput()
             call.enqueue(object : Callback<Void> {
 
@@ -235,7 +263,8 @@ class HomeFragment : Fragment() {
                 println(message)
                 println("mq1: $mq1")
                 println("mq2: $mq2")
-                println("fq1: $fqa")
+                println("fqq: $fqq")
+                println("fqa: $fqa")
                 println("jou: $jou")
                 println("gratQ: $gratQ")
                 println("gratA: $gratA")
@@ -243,6 +272,8 @@ class HomeFragment : Fragment() {
 
                 //Add user's message to messageAdapter
                 adapter.addMessage(message)
+                viewModel.newPendingMessage(message)
+                viewModel.clearInterruptedFlag()
                 binding.botTypingDots.visibility = View.VISIBLE
 
                 val call = ChatService.create().postMessage(message)
@@ -347,7 +378,8 @@ class HomeFragment : Fragment() {
                             }
                             "sfqq}" -> {
                                 fqq = ""
-                                viewModel.addAnswerToMap("fqQ", fqq)
+                                viewModel.removeAnswerFromMap("fqQ")
+                                viewModel.removeAnswerFromMap("fq1")
                             }
                             "jou}" -> jouReceived = true
                             "sjou}" -> {
@@ -360,8 +392,8 @@ class HomeFragment : Fragment() {
                                 viewModel.removeAnswerFromMap("gratQ")
                             }
                             "end}" -> {
-                                context?.let { viewModel.saveAnswersToFile(it) }
-                                context?.let { viewModel.saveJournalToFile(it) }
+                                //context?.let { viewModel.saveAnswersToFile(it) }
+                                saveSessionJournal(sessionId)
                                 //dashboardViewModel.readFilesAndUpdate()
                                 //Sets a new Session Variable
                                 (activity as MainActivity).newSession()
@@ -384,7 +416,7 @@ class HomeFragment : Fragment() {
                     if (jsonObject["fq1"] as String != "") {
                         fqa = jsonObject["fq1"] as String
                         viewModel.addAnswerToMap("fq1", fqa)
-                        context?.let { viewModel.saveAnswersToFile(it) }
+                        saveSessionAnswers(sessionId)
                     }
 
                     newList.add(tempString)
@@ -401,12 +433,12 @@ class HomeFragment : Fragment() {
                         Message(jsonObject["user"] as String, i,
                             jsonObject["time"] as Long, sessionId, focus, mq1, mq2, gratQ, gratA, fqa))
                 }
-                for (i in messages) {
-                    if (i.user == "bot") {
-                        binding.botTypingDots.visibility = View.GONE
-                    }
-                }
                 activity?.runOnUiThread {
+                    for (i in messages) {
+                        if (i.user == "bot") {
+                            binding.botTypingDots.visibility = View.GONE
+                        }
+                    }
                     for(i in messages) {
                         adapter.addMessage(i)
                         viewModel.addMessage(i)
@@ -418,12 +450,15 @@ class HomeFragment : Fragment() {
                     } catch (error: Exception) {
                         println(error.message)
                         println(error.stackTraceToString())
+                        viewModel.setInterruptedFlag()
                     }
-
                 }
+
+
             } catch (e : Exception) {
                 println(e.message)
                 println(e.stackTraceToString())
+                viewModel.setInterruptedFlag()
             }
         }
 
@@ -435,7 +470,24 @@ class HomeFragment : Fragment() {
         _binding = null
     }
 
-    fun clearAnswers() {
+    fun saveSessionAnswers(session: String) {
+        //This stops the same session answers from being saved multiple times
+        if(viewModel.lastSavedSessionAnswers.value != session) {
+            viewModel.updateLastSavedSessionAnswers(session)
+            context?.let { viewModel.saveAnswersToFile(it) }
+        }
+    }
+
+    fun saveSessionJournal(session: String) {
+        if(viewModel.lastSavedSessionJournal.value != session) {
+            viewModel.updateLastSavedSessionJournal(session)
+            context?.let { viewModel.saveJournalToFile(it) }
+        } else {
+            println("Already Saved Journal")
+        }
+    }
+
+    private fun clearAnswers() {
         mq1  = ""
         mq2  = ""
         fqq = ""
