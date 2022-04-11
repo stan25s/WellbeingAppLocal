@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:41332903952:android:09deaf1b834e3427757a95",
         "android_client_info": {
-          "package_name": "com.example.wellbeingapplocal"
+          "package_name": "my.journalbot.local"
         }
       },
       "oauth_client": [
