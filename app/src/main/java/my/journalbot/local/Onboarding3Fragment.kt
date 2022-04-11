@@ -1,6 +1,5 @@
-package com.example.wellbeingapplocal
+package my.journalbot.local
 
-import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -10,7 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.preference.PreferenceManager
-import com.example.wellbeingapplocal.databinding.FragmentOnboarding3Binding
+import my.journalbot.local.R
+import my.journalbot.local.databinding.FragmentOnboarding3Binding
 
 
 class Onboarding3Fragment : Fragment() {

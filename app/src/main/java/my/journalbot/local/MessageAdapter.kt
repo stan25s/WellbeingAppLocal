@@ -1,4 +1,4 @@
-package com.example.wellbeingapplocal
+package my.journalbot.local
 
 import android.content.Context
 import android.text.format.DateUtils
@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import my.journalbot.local.R
 import kotlinx.android.synthetic.main.bot_message.view.*
 import kotlinx.android.synthetic.main.my_message.view.*
 import kotlinx.android.synthetic.main.other_message.view.*
@@ -147,5 +148,5 @@ class MessageAdapter (val context: Context) : RecyclerView.Adapter<MessageViewHo
 }
 
 open class MessageViewHolder (view: View) : RecyclerView.ViewHolder(view) {
-    open fun bind(message:Message) {}
+    open fun bind(message: Message) {}
 }

@@ -1,8 +1,5 @@
-package com.example.wellbeingapplocal
+package my.journalbot.local
 
-import android.util.Log
-import android.util.Log.INFO
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory

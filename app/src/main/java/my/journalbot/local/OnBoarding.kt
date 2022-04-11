@@ -1,14 +1,11 @@
-package com.example.wellbeingapplocal
+package my.journalbot.local
 
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Adapter
 import androidx.fragment.app.FragmentActivity
-import androidx.viewpager2.widget.ViewPager2
-import com.example.wellbeingapplocal.databinding.ActivityOnboardingBinding
+import my.journalbot.local.databinding.ActivityOnboardingBinding
 
 class OnBoarding : FragmentActivity() {
 

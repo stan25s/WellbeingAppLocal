@@ -1,4 +1,4 @@
-package com.example.wellbeingapplocal
+package my.journalbot.local
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -10,7 +10,6 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.preference.PreferenceManager
-import kotlinx.coroutines.channels.Channel
 import kotlin.random.Random
 
 class AlarmReceiver : BroadcastReceiver() {

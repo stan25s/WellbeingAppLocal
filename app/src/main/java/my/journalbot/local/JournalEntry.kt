@@ -1,4 +1,4 @@
-package com.example.wellbeingapplocal
+package my.journalbot.local
 
 data class JournalEntry(
     var id: String,

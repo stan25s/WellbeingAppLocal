@@ -1,8 +1,8 @@
-package com.example.wellbeingapplocal.ui.profile
+package my.journalbot.local.ui.profile
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.wellbeingapplocal.R
+import my.journalbot.local.R
 
 class HelpActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

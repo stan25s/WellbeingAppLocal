@@ -1,6 +1,5 @@
-package com.example.wellbeingapplocal.ui.dashboard
+package my.journalbot.local.ui.dashboard
 
-import android.app.MediaRouteActionProvider
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,11 +10,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.wellbeingapplocal.JournalAdapter
-import com.example.wellbeingapplocal.MoodColour
-import com.example.wellbeingapplocal.R
-import com.example.wellbeingapplocal.databinding.FragmentDashboardBinding
-import java.sql.Date.valueOf
+import my.journalbot.local.JournalAdapter
+import my.journalbot.local.MoodColour
+import my.journalbot.local.R
+import my.journalbot.local.databinding.FragmentDashboardBinding
 import java.text.SimpleDateFormat
 import java.time.Instant
 import java.time.LocalDate

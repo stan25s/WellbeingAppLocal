@@ -1,20 +1,17 @@
-package com.example.wellbeingapplocal
+package my.journalbot.local
 
 import android.app.AlarmManager
 import android.app.PendingIntent
-import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import androidx.preference.PreferenceManager
-import com.allyants.notifyme.NotifyMe
-import com.example.wellbeingapplocal.databinding.ActivityMainBinding
+import my.journalbot.local.R
+import my.journalbot.local.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import java.time.Instant
 import java.util.*
 
 

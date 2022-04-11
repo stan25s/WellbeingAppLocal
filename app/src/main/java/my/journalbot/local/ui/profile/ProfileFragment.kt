@@ -1,18 +1,16 @@
-package com.example.wellbeingapplocal.ui.profile
+package my.journalbot.local.ui.profile
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
-import com.example.wellbeingapplocal.FeedbackActivity
-import com.example.wellbeingapplocal.R
-import com.example.wellbeingapplocal.databinding.FragmentProfileBinding
-import kotlinx.android.synthetic.main.fragment_profile.*
+import my.journalbot.local.FeedbackActivity
+import my.journalbot.local.R
+import my.journalbot.local.databinding.FragmentProfileBinding
 
 class ProfileFragment : Fragment() {
 

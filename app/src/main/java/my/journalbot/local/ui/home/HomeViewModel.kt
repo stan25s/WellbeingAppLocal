@@ -1,13 +1,11 @@
-package com.example.wellbeingapplocal.ui.home
+package my.journalbot.local.ui.home
 
 import android.content.Context
-import android.content.SharedPreferences
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.wellbeingapplocal.Message
+import my.journalbot.local.Message
 import java.io.FileOutputStream
-import java.io.*
 import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*

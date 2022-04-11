@@ -1,7 +1,6 @@
-package com.example.wellbeingapplocal.ui.home
+package my.journalbot.local.ui.home
 
 import android.content.ContentValues.TAG
-import android.content.Context
 import android.content.SharedPreferences
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.os.Bundle
@@ -17,9 +16,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.wellbeingapplocal.*
-import com.example.wellbeingapplocal.ChatApp.Companion.user
-import com.example.wellbeingapplocal.databinding.FragmentHomeBinding
+import my.journalbot.local.*
+import my.journalbot.local.ChatApp.Companion.user
+import my.journalbot.local.databinding.FragmentHomeBinding
 import com.pusher.client.Pusher
 import com.pusher.client.PusherOptions
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -29,7 +28,11 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
-import com.example.wellbeingapplocal.ui.dashboard.DashboardViewModel
+import my.journalbot.local.ui.dashboard.DashboardViewModel
+import my.journalbot.local.ChatService
+import my.journalbot.local.MainActivity
+import my.journalbot.local.Message
+import my.journalbot.local.MessageAdapter
 import java.lang.Exception
 
 
@@ -431,7 +434,8 @@ class HomeFragment : Fragment() {
                 for (i in newList) {
                     messages.add(
                         Message(jsonObject["user"] as String, i,
-                            jsonObject["time"] as Long, sessionId, focus, mq1, mq2, gratQ, gratA, fqa))
+                            jsonObject["time"] as Long, sessionId, focus, mq1, mq2, gratQ, gratA, fqa)
+                    )
                 }
                 activity?.runOnUiThread {
                     for (i in messages) {

@@ -1,4 +1,4 @@
-package com.example.wellbeingapplocal
+package my.journalbot.local
 
 import android.content.BroadcastReceiver
 import android.content.Context

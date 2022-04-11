@@ -1,13 +1,8 @@
-package com.example.wellbeingapplocal
+package my.journalbot.local
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.wellbeingapplocal.Onboarding1Fragment
-import com.example.wellbeingapplocal.Onboarding2Fragment
-import com.example.wellbeingapplocal.Onboarding3Fragment
 
 class ViewPagerAdapter(fa: FragmentActivity): FragmentStateAdapter(fa) {
 

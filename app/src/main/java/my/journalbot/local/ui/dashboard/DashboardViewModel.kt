@@ -1,11 +1,11 @@
-package com.example.wellbeingapplocal.ui.dashboard
+package my.journalbot.local.ui.dashboard
 
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.wellbeingapplocal.JournalEntry
-import com.example.wellbeingapplocal.MoodColour
+import my.journalbot.local.JournalEntry
+import my.journalbot.local.MoodColour
 import java.io.BufferedReader
 import java.io.File
 import java.io.FileInputStream

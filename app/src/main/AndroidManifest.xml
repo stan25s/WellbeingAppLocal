@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.wellbeingapplocal">
+    package="my.journalbot.local">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY"/>
@@ -15,17 +15,17 @@
         android:usesCleartextTraffic="true"
         android:configChanges="orientation|screenSize">
         <activity
-            android:name=".FeedbackActivity"
+            android:name="my.journalbot.local.FeedbackActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.profile.HelpActivity"
+            android:name="my.journalbot.local.ui.profile.HelpActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.profile.SettingsActivity"
+            android:name="my.journalbot.local.ui.profile.SettingsActivity"
             android:exported="false"
             android:label="@string/title_activity_settings" />
         <activity
-            android:name=".OnBoarding"
+            android:name="my.journalbot.local.OnBoarding"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,11 +34,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name="my.journalbot.local.MainActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustPan" />
-        <receiver android:name="com.example.wellbeingapplocal.AlarmReceiver" android:enabled="true"/>
-        <receiver android:name="com.example.wellbeingapplocal.BootReceiver" android:enabled="true"
+        <receiver android:name="my.journalbot.local.AlarmReceiver" android:enabled="true"/>
+        <receiver android:name="my.journalbot.local.BootReceiver" android:enabled="true"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>

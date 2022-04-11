@@ -1,4 +1,4 @@
-package com.example.wellbeingapplocal.ui.profile
+package my.journalbot.local.ui.profile
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

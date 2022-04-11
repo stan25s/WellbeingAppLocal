@@ -1,11 +1,11 @@
-package com.example.wellbeingapplocal.ui.profile
+package my.journalbot.local.ui.profile
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
-import com.example.wellbeingapplocal.R
-import com.example.wellbeingapplocal.databinding.SettingsActivityBinding
+import my.journalbot.local.R
+import my.journalbot.local.databinding.SettingsActivityBinding
 
 class SettingsActivity : AppCompatActivity() {
 

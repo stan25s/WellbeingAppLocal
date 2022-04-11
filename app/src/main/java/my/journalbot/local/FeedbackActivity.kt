@@ -1,13 +1,12 @@
-package com.example.wellbeingapplocal
+package my.journalbot.local
 
-import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.*
-import kotlinx.android.synthetic.main.activity_feedback.*
+import my.journalbot.local.R
 
 class FeedbackActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 

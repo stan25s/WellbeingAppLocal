@@ -1,15 +1,12 @@
-package com.example.wellbeingapplocal
+package my.journalbot.local
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.viewpager2.widget.ViewPager2
-import com.example.wellbeingapplocal.databinding.FragmentOnboarding1Binding
-import com.example.wellbeingapplocal.databinding.FragmentOnboarding2Binding
-import com.example.wellbeingapplocal.databinding.FragmentOnboarding3Binding
-import java.util.ArrayList
+import my.journalbot.local.R
+import my.journalbot.local.databinding.FragmentOnboarding2Binding
 
 
 class Onboarding2Fragment : Fragment() {

@@ -1,7 +1,6 @@
-package com.example.wellbeingapplocal
+package my.journalbot.local
 
 import android.content.Context
-import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +8,7 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import my.journalbot.local.R
 import kotlinx.android.synthetic.main.journal_item.view.*
 
 class JournalAdapter (val context: Context) : RecyclerView.Adapter<JournalHolder>() {
@@ -60,7 +60,7 @@ class JournalAdapter (val context: Context) : RecyclerView.Adapter<JournalHolder
 
         private var moodColour: View = view.mood_colour
 
-        override fun bind(journalEntry:JournalEntry) {
+        override fun bind(journalEntry: JournalEntry) {
             date.text = journalEntry.date
             dayRating.text = journalEntry.day_rating
 
@@ -84,12 +84,22 @@ class JournalAdapter (val context: Context) : RecyclerView.Adapter<JournalHolder
 
             journalText.text = journalEntry.journal_entry
             when (journalEntry.mood) {
-                "Happy" -> moodColour.setBackgroundColor(ContextCompat.getColor(context, R.color.happy))
-                "Calm" -> moodColour.setBackgroundColor(ContextCompat.getColor(context, R.color.calm))
-                "Powerful" -> moodColour.setBackgroundColor(ContextCompat.getColor(context, R.color.powerful))
+                "Happy" -> moodColour.setBackgroundColor(ContextCompat.getColor(context,
+                    R.color.happy
+                ))
+                "Calm" -> moodColour.setBackgroundColor(ContextCompat.getColor(context,
+                    R.color.calm
+                ))
+                "Powerful" -> moodColour.setBackgroundColor(ContextCompat.getColor(context,
+                    R.color.powerful
+                ))
                 "Sad" -> moodColour.setBackgroundColor(ContextCompat.getColor(context, R.color.sad))
-                "Angry" -> moodColour.setBackgroundColor(ContextCompat.getColor(context, R.color.angry))
-                "Anxious" -> moodColour.setBackgroundColor(ContextCompat.getColor(context, R.color.anxious))
+                "Angry" -> moodColour.setBackgroundColor(ContextCompat.getColor(context,
+                    R.color.angry
+                ))
+                "Anxious" -> moodColour.setBackgroundColor(ContextCompat.getColor(context,
+                    R.color.anxious
+                ))
             }
         }
     }

@@ -7,7 +7,7 @@
     android:paddingStart="50dp"
     android:paddingEnd="50dp"
     android:background="@color/bg1"
-    tools:context=".FeedbackActivity">
+    tools:context="my.journalbot.local.FeedbackActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
